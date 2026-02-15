@@ -1,0 +1,180 @@
+<div class="container">
+
+    <form  #pessoaForm="ngForm" (ngSubmit)="cadastrar(pessoaForm)" autocomplete="off">
+        
+        <div class="p-grid">
+
+            <div class="p-col-12">
+              <h1>Pessoa</h1>
+            </div>
+
+            <div class="formgrid grid">
+
+                <div class="lg:col-12 md:col-12 sm:col-12 p-fluid">
+                  <label for="nome">Nome</label>
+                  <input pInputText 
+                         name="nome" 
+                         type="text"
+                         [(ngModel)]="pessoa.nome"
+                         #nome="ngModel"
+                         required
+                         minlength="2"
+                         >
+
+                         <app-message
+                            [control]="nome"
+                            error="required"
+                            text="Nome é obrigatório." 
+                          ></app-message>
+                          
+                          <app-message 
+                            [control]="nome" 
+                            error="minlength"
+                            text="Mínimo de {{ nome.errors?.['minlength']?.requiredLength }} caracteres">
+                          </app-message>
+                </div>
+
+                <div class="lg:col-8 md:col-8 sm:col-12 p-fluid">
+                  <label>Logradouro</label>
+                  <input pInputText
+                         name="logradouro"
+                         type="text"
+                         [(ngModel)]="pessoa.endereco.logradouro"
+                         #logradouro="ngModel"
+                         required
+                         >
+
+                         <app-message
+                            [control]="logradouro"
+                            error="required"
+                            text="Logradouro é obrigatório." 
+                          ></app-message>
+                </div>
+
+                <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
+                  <label>Numero</label>
+                  <input pInputText
+                         name="numero"
+                         type="text"
+                         [(ngModel)]="pessoa.endereco.numero"
+                         #numero="ngModel"
+                         required
+                         >
+
+
+                  <app-message
+                      [control]="numero"
+                      error="required"
+                      text="Número é obrigatório." 
+                    ></app-message>
+
+                </div>
+
+                <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
+                  <label for="complemento">Complemento</label>
+                  <input pInputText
+                         id="complemento"
+                         type="text"
+                         [(ngModel)]="pessoa.endereco.complemento"
+                         #complemento="ngModel"
+                         >
+                </div>
+
+                <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
+                  <label>Bairro</label>
+                  <p-dropdown
+                      name="bairro"
+                      [options]="bairros" 
+                      [(ngModel)]="pessoa.endereco.bairro"
+                      #bairro="ngModel"
+                      placeholder="Select" 
+                      >
+                  </p-dropdown>
+
+                  <app-message
+                      [control]="bairro"
+                      error="required"
+                      text="Bairro é obrigatório." 
+                    ></app-message>
+
+                  
+                </div>
+
+                <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
+                  <label>CEP</label>
+                  <p-inputMask 
+                      name="cep"
+                      mask="9.9999-999" 
+                      [(ngModel)]="pessoa.endereco.cep"
+                      #cep="ngModel"
+                  >
+                  </p-inputMask>
+
+                  <app-message
+                      [control]="cep"
+                      error="required"
+                      text="CEP é obrigatório." 
+                  ></app-message>
+
+                </div>
+
+                <div class="lg:col-8 md:col-8 sm:col-12 p-fluid">
+                  <label>Cidade</label>
+                  <p-dropdown 
+                      name="cidade"
+                      [options]="cidades" 
+                      [(ngModel)]="pessoa.endereco.cidade"
+                      #cidade="ngModel"
+                      placeholder="Select" 
+                      >
+                  </p-dropdown>
+
+                  <app-message
+                      [control]="cidade"
+                      error=""
+                      text="Cidade é obrigatória." 
+                      >
+                  </app-message>
+                </div>
+
+                <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
+                  <label>Estado</label>
+                  <p-dropdown 
+                      name="estado"
+                      [options]="estados" 
+                      [(ngModel)]="pessoa.endereco.estado"
+                      #estado="ngModel"
+                      placeholder="Select" 
+                      >
+                  </p-dropdown>
+
+                  <app-message
+                      [control]="estado"
+                      error="required"
+                      text="Estado é obrigatório." 
+                    >
+                  </app-message>
+                </div>
+
+                
+            </div>    
+
+            <div class="formgrid grid">
+              <div class="lg:col-2 md:col-2 sm:col-3 p-fluid">
+                <button pButton icon="pi pi-check" class="p-button-help" type="submit" label="Salvar"></button>
+              </div>
+              <div class="lg:col-2 md:col-2 sm:col-3 p-fluid">
+                <button pButton icon="pi pi-plus" class="p-button-secondary" type="button" label="Novo"></button>
+              </div>
+              <div class="lg:col-4 md:col-4 sm:col-6 p-fluid">  
+                <a href="javascript:;">Voltar para a pesquisa</a>
+              </div>
+            </div>  
+
+        </div>
+
+    </form>
+
+</div>   
+
+  
