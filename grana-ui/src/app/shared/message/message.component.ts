@@ -8,7 +8,6 @@ import { FormControl } from "@angular/forms";
         {{ text }}
     </div>
 
-
 `,
 })
 export class MessageComponent {
@@ -23,7 +22,5 @@ export class MessageComponent {
     temErro(): boolean {
         return this.control.hasError(this.error) && this.control.dirty;
     }
-
-
 
 }   

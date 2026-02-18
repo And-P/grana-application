@@ -13,6 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
+import { RouterLinkWithHref, RouterModule } from "@angular/router";
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -27,24 +28,24 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   ],
   imports: [
     CommonModule,
+    RouterModule,
 
     ToastModule,
     ConfirmDialogModule,
-
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,
             useFactory: HttpLoaderFactory,
             deps: [HttpClient]
         }
-        }),
-  ],
+    }),
+    RouterLinkWithHref
+],
   exports: [
     NavbarComponent,
 
     ToastModule,
     ConfirmDialogModule,
-    
 
   ],
   providers: [

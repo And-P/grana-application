@@ -23,6 +23,7 @@
 
 #### Tecnologias
 - Java [17]
+- Node [16.10.0]
 - TypeScript [4.7.2]
 - Angular [14.2.3]
 - PrimeNG [14.0.0]

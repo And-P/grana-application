@@ -92,8 +92,9 @@
                     </td>
                     <td class="col-acoes-content">
                       <a pButton 
-                         icon="pi pi-pencil" 
                          class="p-button-secondary" 
+                         icon="pi pi-pencil" 
+                         [routerLink]="['/lancamentos', lancamento.codigo]"
                          pTooltip="Editar" 
                          tooltipPosition="top"></a>
                       <button pButton 
@@ -118,7 +119,13 @@
   
     <div class="flex flex-row-reverse">
       <div>
-        <a pButton icon="pi pi-plus" class="p-button-help" label="Lançamento" pTooltip="Adicionar Lançamento" tooltipPosition="top"></a>
+        <a pButton 
+           class="p-button-help" 
+           icon="pi pi-plus" 
+           routerLink="/lancamentos/cadastro"
+           label="Lançamento" 
+           pTooltip="Adicionar Lançamento" 
+           tooltipPosition="top" ></a>
       </div>
     </div>
   

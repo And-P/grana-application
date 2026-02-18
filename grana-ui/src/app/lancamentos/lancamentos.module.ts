@@ -18,6 +18,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentoPesquisaComponent } from './lancamento-pesquisa/lancamento-pesquisa.component';
 import { LancamentoService } from './lancamento.service';
+import { RouterLinkWithHref, RouterModule } from "@angular/router";
 
 
 
@@ -28,22 +29,23 @@ import { LancamentoService } from './lancamento.service';
         
     ],
     imports: [
-        CommonModule,
-        FormsModule,
-        HttpClientModule,
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule,    
 
-        InputNumberModule,
-        InputTextModule,
-        ButtonModule,
-        TableModule,
-        TooltipModule,
-        InputTextareaModule,
-        CalendarModule,
-        SelectButtonModule,
-        DropdownModule,
-
-        SharedModule
-  ],
+    InputNumberModule,
+    InputTextModule,
+    ButtonModule,
+    TableModule,
+    TooltipModule,
+    InputTextareaModule,
+    CalendarModule,
+    SelectButtonModule,
+    DropdownModule,
+    SharedModule,
+    RouterLinkWithHref
+],
     exports: [
         LancamentoCadastroComponent,
         LancamentoPesquisaComponent,

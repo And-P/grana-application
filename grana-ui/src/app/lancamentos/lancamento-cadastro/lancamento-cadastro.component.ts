@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
@@ -47,7 +48,8 @@ export class LancamentoCadastroComponent implements OnInit {
                private pessoaService: PessoaService,
                private lancamentoService: LancamentoService,
                private messageService: MessageService,
-               private errorHandlerService: ErrorHandlerService ) { }
+               private errorHandlerService: ErrorHandlerService,
+               private route: ActivatedRoute ) { }
 
 
   buscarCategorias() {
@@ -81,6 +83,7 @@ export class LancamentoCadastroComponent implements OnInit {
   ngOnInit() {
     // this.buscarCategorias();
     // this.buscarPessoas();
+    console.log(this.route.snapshot.params['codigo']);
   }
 
 }
