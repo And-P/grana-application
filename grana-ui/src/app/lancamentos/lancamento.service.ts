@@ -20,7 +20,7 @@ export class LancamentoService {
 
   lancamentosUrl = 'http://localhost:8080/lancamentos';
 
-  private authToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzEzODMxMzIsInVzZXJfbmFtZSI6ImFkbWluQHVtYnJlbGxhLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ0FEQVNUUkFSX0NBVEVHT1JJQSIsIlJPTEVfUEVTUVVJU0FSX1BFU1NPQSIsIlJPTEVfUkVNT1ZFUl9QRVNTT0EiLCJST0xFX0NBREFTVFJBUl9MQU5DQU1FTlRPIiwiUk9MRV9QRVNRVUlTQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUkVNT1ZFUl9MQU5DQU1FTlRPIiwiUk9MRV9DQURBU1RSQVJfUEVTU09BIiwiUk9MRV9QRVNRVUlTQVJfQ0FURUdPUklBIl0sImp0aSI6InRhWFBDd212SkI5N0N0QjRjbHg4NXdTbHI1SSIsImNsaWVudF9pZCI6ImFuZ3VsYXIiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.hDMjwzbz7pBYaCVxpIpzcim--DypXXB4ZGsgjC5TRKw';  
+  private authToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzIwNzA0NTEsInVzZXJfbmFtZSI6ImFkbWluQHVtYnJlbGxhLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ0FEQVNUUkFSX0NBVEVHT1JJQSIsIlJPTEVfUEVTUVVJU0FSX1BFU1NPQSIsIlJPTEVfUkVNT1ZFUl9QRVNTT0EiLCJST0xFX0NBREFTVFJBUl9MQU5DQU1FTlRPIiwiUk9MRV9QRVNRVUlTQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUkVNT1ZFUl9MQU5DQU1FTlRPIiwiUk9MRV9DQURBU1RSQVJfUEVTU09BIiwiUk9MRV9QRVNRVUlTQVJfQ0FURUdPUklBIl0sImp0aSI6IjYwelFCR2ZQZTIzTlN6b2VUSEJiWm53T05hWSIsImNsaWVudF9pZCI6ImFuZ3VsYXIiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.TEgJq5zhRmF7mAATuEuLeIXrfv28uvd6b_r1rlIfhWM';  
 
   datePipe = new DatePipe('pt-BR');
 
@@ -64,6 +64,7 @@ export class LancamentoService {
                   });     
   }
 
+  
   excluir(codigo: number): Promise<void | null> {
     const headers = new HttpHeaders().append('Authorization', this.authToken);
 
@@ -71,6 +72,7 @@ export class LancamentoService {
               .toPromise()
               .then(() => null);
   }
+
 
   adicionar(lancamento: Lancamento): Promise<Lancamento | undefined> {
     const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
@@ -86,5 +88,52 @@ export class LancamentoService {
     return this.http.post<Lancamento>(this.lancamentosUrl, lancamento, { headers })
       .toPromise();
   }  
+
+
+  atualizar(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
+
+    if (lancamento.dataVencimento) {
+      lancamento.dataVencimento = this.datePipe.transform(lancamento.dataVencimento, 'dd/MM/yyyy') as any;
+    }
+
+    if (lancamento.dataPagamento) {
+      lancamento.dataPagamento = this.datePipe.transform(lancamento.dataPagamento, 'dd/MM/yyyy') as any;
+    }
+
+    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, { headers })
+                    .toPromise()
+                    .then((response: any) => {
+                      this.converterStringsParaDatas([response]);
+                      return response;
+                    });
+  }
+
+
+  buscarPorCodigo(codigo: number): Promise<Lancamento> {
+    const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
+
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers })
+                    .toPromise()
+                    .then((response: any) => {
+        
+                      this.converterStringsParaDatas([response]);
+
+            return response;
+      });
+  }
+
+
+  private converterStringsParaDatas(lancamentos: Lancamento[]): void {
+    for (const lancamento of lancamentos) {
+      let offset = new Date().getTimezoneOffset() * 60000;
+
+      lancamento.dataVencimento = new Date(new Date(lancamento.dataVencimento!).getTime() + offset);
+
+      if (lancamento.dataPagamento) {
+        lancamento.dataPagamento = new Date(new Date(lancamento.dataPagamento!).getTime() + offset);
+      }
+    }
+  }
 
 }

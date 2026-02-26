@@ -19,17 +19,20 @@ import { DropdownModule } from "primeng/dropdown";
 
 
 import { AppComponent } from './app.component';
+
 import { CoreModule } from './core/core.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
+
 import { LancamentoPesquisaComponent } from './lancamentos/lancamento-pesquisa/lancamento-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
+import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadastro.component';
 
 const routes: Routes = [
   { path: 'lancamentos', component: LancamentoPesquisaComponent },
   { path: 'lancamentos/:codigo', component: LancamentoCadastroComponent },
-  { path: 'lancamentos/cadastro', component: LancamentoCadastroComponent},
+  { path: 'lancamentos/cadastro', component: LancamentoCadastroComponent },
   { path: 'pessoas', component: PessoasPesquisaComponent },
 ];
 
@@ -40,8 +43,8 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
     
     CoreModule,

@@ -1,6 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLinkWithHref, RouterModule } from "@angular/router";
 
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -22,6 +23,8 @@ import { PessoaService } from './pessoas-pesquisa/pessoa.service';
    imports: [
      CommonModule,
      FormsModule,
+     RouterModule,
+     RouterLinkWithHref,
 
      InputTextModule,
      InputMaskModule,

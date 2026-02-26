@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLinkWithHref, RouterModule } from "@angular/router";
 
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -18,7 +19,6 @@ import { SharedModule } from '../shared/shared.module';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentoPesquisaComponent } from './lancamento-pesquisa/lancamento-pesquisa.component';
 import { LancamentoService } from './lancamento.service';
-import { RouterLinkWithHref, RouterModule } from "@angular/router";
 
 
 
@@ -33,6 +33,7 @@ import { RouterLinkWithHref, RouterModule } from "@angular/router";
     FormsModule,
     HttpClientModule,
     RouterModule,    
+    RouterLinkWithHref,
 
     InputNumberModule,
     InputTextModule,
@@ -43,8 +44,8 @@ import { RouterLinkWithHref, RouterModule } from "@angular/router";
     CalendarModule,
     SelectButtonModule,
     DropdownModule,
+
     SharedModule,
-    RouterLinkWithHref
 ],
     exports: [
         LancamentoCadastroComponent,

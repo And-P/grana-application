@@ -1,12 +1,12 @@
 <div class="container">
 
   
-    <form #varNgForm="ngForm"  (ngSubmit)="salvar(varNgForm)"  autocomplete="off">
+    <form #lancamentoForm="ngForm"  (ngSubmit)="salvar(lancamentoForm)"  autocomplete="off">
         
         <div class="p-grid">
 
             <div class="p-col-12">
-              <h1>Lançamento</h1>
+              <h1>{{ editando ? 'Editar ' : 'Cadastrar ' }} Lançamento</h1>
             </div>
 
             <div class="p-col-12">
@@ -26,9 +26,12 @@
                       <p-calendar 
                           name="dataVencimento" 
                           dateFormat="dd/mm/yy"
-                          [showIcon]="true" 
+                          [inline]="false"
+                          [readonlyInput]="false"
+                          [showIcon]="false" 
                           [(ngModel)]="lancamento.dataVencimento" 
                           #vencimento="ngModel" 
+                          [required]="true"
                           >
                       </p-calendar>
 
@@ -45,7 +48,7 @@
                       <p-calendar 
                           name="dataPagamento"
                           dateFormat="dd/mm/yy"
-                          [showIcon]="true" 
+                          [showIcon]="false" 
                           [(ngModel)]="lancamento.dataPagamento"
                           >
                       </p-calendar>    
@@ -59,9 +62,8 @@
                          type="text"
                          [(ngModel)]="lancamento.descricao"
                          #descricao="ngModel"
-                         placeholder="Descrição do lançamento"
-                         required="true"
-                         minlength="5"
+                         [required]="true"
+                         minlength="2"
                          >
 
                          <app-message
@@ -88,35 +90,35 @@
                       locale="pt-BR"
                       [(ngModel)]="lancamento.valor"
                       #valor="ngModel"
+                      [required]="true"
                       placeholder="0,00"
                       >
                   </p-inputNumber>
                 </div>
 
                  <div class="lg:col-6 md:col-6 sm:col-12 p-fluid">
-                  <label>Categoria: {{ categoria.value }} </label>
+                  <label>Categoria: </label>
                   <p-dropdown 
                       name="categoria"
                       [options]="categorias" 
                       [(ngModel)]="lancamento.categoria.codigo"
-                      [ngModelOptions]="{standalone: true}"
                       #categoria
-                      placeholder="Selecione Categoria" 
                       [required]="true"
+                      placeholder="Selecione" 
                       >
                   </p-dropdown>
                 </div>
 
                 <div class="lg:col-6 md:col-6 sm:col-12 p-fluid">
-                  <label>Pessoa: {{ pessoa.value }} </label>
+                  <label>Pessoa: </label>
                   <p-dropdown 
                       name="pessoa"
                       [options]="pessoas" 
                       [(ngModel)]="lancamento.pessoa.codigo"
-                      [ngModelOptions]="{standalone: true}"
                       #pessoa
-                      placeholder="Selecione Pessoa" 
                       [filter]="true"
+                      [required]="true"
+                      placeholder="Selecione" 
                       >
                   </p-dropdown>
                 </div>
@@ -126,8 +128,7 @@
                   <textarea pInputTextarea 
                             name="observacao"
                             [(ngModel)]="lancamento.observacao"
-                            #observacao
-                            rows="5">
+                            rows="3">
                   </textarea>
                 </div>
 
@@ -135,10 +136,19 @@
 
             <div class="formgrid grid">
               <div class="lg:col-2 md:col-2 sm:col-3 p-fluid">
-                <button pButton icon="pi pi-check" class="p-button-help" type="submit" label="Salvar" [disabled]="varNgForm.invalid"></button>
+                <button pButton 
+                        icon="pi pi-check" 
+                        class="p-button-help" 
+                        type="submit" 
+                        label="Salvar" 
+                        [disabled]="lancamentoForm.invalid"></button>
               </div>
               <div class="lg:col-2 md:col-2 sm:col-3 p-fluid">
-                <button pButton icon="pi pi-plus" class="p-button-secondary" type="button" label="Novo"></button>
+                <button pButton 
+                        icon="pi pi-plus" 
+                        class="p-button-secondary" 
+                        type="button" 
+                        label="Novo"></button>
               </div>
               <div class="lg:col-4 md:col-4 sm:col-6 p-fluid">  
                 <a routerLink="/lancamentos" class="p-button p-button-text">Voltar para a pesquisa</a>

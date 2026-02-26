@@ -51,6 +51,31 @@ export class LancamentoCadastroComponent implements OnInit {
                private errorHandlerService: ErrorHandlerService,
                private route: ActivatedRoute ) { }
 
+  ngOnInit() {
+    
+    const codigoLancamento = this.route.snapshot.params['codigo'];
+
+    if (codigoLancamento && codigoLancamento !== 'cadastro') {
+      this.carregarLancamento(codigoLancamento);
+    }
+
+    this.buscarCategorias();
+    this.buscarPessoas();
+  }
+
+
+  get editando() {
+    return Boolean(this.lancamento.codigo);
+  }  
+
+  carregarLancamento(codigo: number) {
+    this.lancamentoService.buscarPorCodigo(codigo)
+                          .then(lancamento => {
+                            this.lancamento = lancamento;
+                          })
+                          .catch(error => this.errorHandlerService.handle(error));
+  }
+
 
   buscarCategorias() {
     return this.categoriaService.listarTodas()
@@ -68,7 +93,17 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch(error => this.errorHandlerService.handle(error));
   } 
 
-  salvar(form: NgForm) {
+
+  salvar(form: NgForm){
+    if(this.editando) {
+      this.atualizarLancamento(form);
+    } else {
+      this.salvarLancamento(form);
+    }
+  }
+
+
+  salvarLancamento(form: NgForm) {
     this.lancamentoService.adicionar(this.lancamento)
                           .then(() => {
                             this.messageService.add({ severity: 'success', detail: 'Lançamento adicionado com sucesso!' });
@@ -79,11 +114,15 @@ export class LancamentoCadastroComponent implements OnInit {
                           .catch(error => this.errorHandlerService.handle(error));
   }  
 
-
-  ngOnInit() {
-    // this.buscarCategorias();
-    // this.buscarPessoas();
-    console.log(this.route.snapshot.params['codigo']);
+  atualizarLancamento(form: NgForm) {
+    this.lancamentoService.atualizar(this.lancamento)
+                          .then(lancamento => {
+                            this.messageService.add({ severity: 'success', detail: 'Lançamento atualizado com sucesso!' });
+                            
+                            this.lancamento = lancamento;
+                          })
+                          .catch(error => this.errorHandlerService.handle(error));
   }
+
 
 }
