@@ -1,23 +1,23 @@
 <div class="container">
 
-    <form  #pessoaForm="ngForm" (ngSubmit)="cadastrar(pessoaForm)" autocomplete="off">
+    <form  #pessoaForm="ngForm" (ngSubmit)="salvar(pessoaForm)" autocomplete="off">
         
         <div class="p-grid">
 
             <div class="p-col-12">
-              <h1>Pessoa</h1>
+              <h1>{{ editando ? 'Edição de' : 'Cadastro de' }} Pessoa</h1>
             </div>
 
             <div class="formgrid grid">
 
                 <div class="lg:col-12 md:col-12 sm:col-12 p-fluid">
-                  <label for="nome">Nome</label>
+                  <label>Nome</label>
                   <input pInputText 
                          name="nome" 
                          type="text"
                          [(ngModel)]="pessoa.nome"
                          #nome="ngModel"
-                         required
+                         [required]="true"
                          minlength="2"
                          >
 
@@ -41,7 +41,7 @@
                          type="text"
                          [(ngModel)]="pessoa.endereco.logradouro"
                          #logradouro="ngModel"
-                         required
+                         [required]="true"
                          >
 
                          <app-message
@@ -58,7 +58,7 @@
                          type="text"
                          [(ngModel)]="pessoa.endereco.numero"
                          #numero="ngModel"
-                         required
+                         [required]="true"
                          >
 
 
@@ -71,25 +71,23 @@
                 </div>
 
                 <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
-                  <label for="complemento">Complemento</label>
+                  <label>Complemento</label>
                   <input pInputText
-                         id="complemento"
+                         name="complemento"
                          type="text"
                          [(ngModel)]="pessoa.endereco.complemento"
-                         #complemento="ngModel"
                          >
                 </div>
 
                 <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
                   <label>Bairro</label>
-                  <p-dropdown
-                      name="bairro"
-                      [options]="bairros" 
-                      [(ngModel)]="pessoa.endereco.bairro"
-                      #bairro="ngModel"
-                      placeholder="Select" 
-                      >
-                  </p-dropdown>
+                  <input pInputText
+                         type="text"
+                         name="bairro"
+                         [(ngModel)]="pessoa.endereco.bairro"
+                         #bairro="ngModel"
+                         [required]="true" 
+                         >
 
                   <app-message
                       [control]="bairro"
@@ -102,13 +100,14 @@
 
                 <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
                   <label>CEP</label>
-                  <p-inputMask 
+                  <input pInputText
+                      type="text"
                       name="cep"
-                      mask="9.9999-999" 
+                      mask="99.999-999"
                       [(ngModel)]="pessoa.endereco.cep"
                       #cep="ngModel"
+                      [required]="true"
                   >
-                  </p-inputMask>
 
                   <app-message
                       [control]="cep"
@@ -120,14 +119,13 @@
 
                 <div class="lg:col-8 md:col-8 sm:col-12 p-fluid">
                   <label>Cidade</label>
-                  <p-dropdown 
-                      name="cidade"
-                      [options]="cidades" 
-                      [(ngModel)]="pessoa.endereco.cidade"
-                      #cidade="ngModel"
-                      placeholder="Select" 
-                      >
-                  </p-dropdown>
+                  <input pInputText
+                         type="text"
+                         name="cidade"
+                         [(ngModel)]="pessoa.endereco.cidade"
+                         #cidade="ngModel"
+                         [required]="true" 
+                         >
 
                   <app-message
                       [control]="cidade"
@@ -139,14 +137,13 @@
 
                 <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
                   <label>Estado</label>
-                  <p-dropdown 
-                      name="estado"
-                      [options]="estados" 
-                      [(ngModel)]="pessoa.endereco.estado"
-                      #estado="ngModel"
-                      placeholder="Select" 
-                      >
-                  </p-dropdown>
+                  <input pInputText 
+                         type="text"
+                         name="estado"
+                         [(ngModel)]="pessoa.endereco.estado"
+                         #estado="ngModel"
+                         [required]="true" 
+                         >
 
                   <app-message
                       [control]="estado"
@@ -161,13 +158,23 @@
 
             <div class="formgrid grid">
               <div class="lg:col-2 md:col-2 sm:col-3 p-fluid">
-                <button pButton icon="pi pi-check" class="p-button-help" type="submit" label="Salvar"></button>
+                <button pButton 
+                        icon="pi pi-check" 
+                        class="p-button-help" 
+                        type="submit" 
+                        label="Salvar"
+                        [disabled]="pessoaForm.invalid"></button>
               </div>
               <div class="lg:col-2 md:col-2 sm:col-3 p-fluid">
-                <button pButton icon="pi pi-plus" class="p-button-secondary" type="button" label="Novo"></button>
+                <button pButton 
+                        icon="pi pi-plus" 
+                        class="p-button-secondary" 
+                        type="button" 
+                        label="Novo"
+                        (click)="nova(pessoaForm)"></button>
               </div>
               <div class="lg:col-4 md:col-4 sm:col-6 p-fluid">  
-                <a routerLink="/pessoas" class="p-button p-button-text">Voltar para a pesquisa</a>
+                <a [routerLink]="['/pessoas']" class="p-button p-button-text">Voltar para a pesquisa</a>
               </div>
             </div>  
 

@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
-import { PessoaCadastro } from 'src/app/core/model';
-import { PessoaService } from '../pessoas-pesquisa/pessoa.service';
 import { MessageService } from 'primeng/api';
+
+import { PessoaService } from '../pessoas-pesquisa/pessoa.service';
+import { Pessoa } from 'src/app/core/model';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
@@ -64,21 +67,88 @@ export class PessoaCadastroComponent {
     { label: 'Venezuela', value: 8 }
   ];  
 
-  pessoa = new PessoaCadastro();
+  pessoa = new Pessoa();
 
   constructor( private pessoaService: PessoaService,
                private messageService: MessageService,
-               private errorHandler: ErrorHandlerService ) { }
+               private errorHandler: ErrorHandlerService,
+               private route: ActivatedRoute,
+               private router: Router,
+               private title: Title  ) { }
 
-  cadastrar(form: NgForm) {
-    this.pessoaService.salvar(this.pessoa)
-        .then( () => {
-          this.messageService.add({ severity: 'success', detail: 'Pessoa cadastrada com sucesso!' });
 
-          form.reset();
-          this.pessoa = new PessoaCadastro();
-        })
-        .catch( error => this.errorHandler.handle(error));  
+
+
+  salvar(form: NgForm) {
+    if (this.editando) {
+      this.atualizarPessoa(form);
+    } else {
+      this.adicionarPessoa(form);
+    }
+  }
+
+  atualizarPessoa(form: NgForm) {
+    this.pessoaService.atualizar(this.pessoa)
+      .then( (pessoa: Pessoa) => {
+        this.pessoa = pessoa;
+
+        this.messageService.add({ severity: 'success', detail: 'Pessoa alterada com sucesso!' });
+        this.atualizarTitulo();
+        
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  adicionarPessoa(form: NgForm) {
+    this.pessoaService.adicionar(this.pessoa)
+      .then((pessoaAdicionada: Pessoa) => {
+        this.messageService.add({ severity: 'success', detail: 'Pessoa adicionada com sucesso!' });
+
+        this.router.navigate(['pessoas', pessoaAdicionada.codigo]);
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarPessoa(codigo: number) {
+    this.pessoaService.buscarPorCodigo(codigo)
+                          .then( (pessoa: Pessoa) => {
+                            this.pessoa = pessoa;
+                            console.log(pessoa);
+                            this.atualizarTitulo();
+                          })
+                          .catch(error => this.errorHandler.handle(error));
+  }
+
+
+  // Verifica se está editando ou cadastrando uma nova pessoa
+
+  get editando() {
+    return Boolean(this.pessoa.codigo);
+  }
+
+  atualizarTitulo() {
+  this.title.setTitle(this.editando ? 'Edição de pessoa' : 'Cadastro de pessoa'); 
+  }
+
+  nova(form: NgForm) {
+    form.reset();
+
+    setTimeout(() => {
+      this.pessoa = new Pessoa();
+    }, 1);
+
+    this.router.navigate(['/pessoas/cadastro'])
+  }
+  
+  ngOnInit() {
+    const codigoPessoa = this.route.snapshot.params['codigo'];
+
+    this.title.setTitle('Cadastro de pessoa');
+
+    if (codigoPessoa && codigoPessoa !== 'cadastro') {
+      this.carregarPessoa(codigoPessoa);
+    }
+
   }
 
 

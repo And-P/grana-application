@@ -16,43 +16,43 @@ import { TooltipModule } from 'primeng/tooltip';
 
 
 import { SharedModule } from '../shared/shared.module';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
+
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentoPesquisaComponent } from './lancamento-pesquisa/lancamento-pesquisa.component';
+
 import { LancamentoService } from './lancamento.service';
 
 
 
 @NgModule({
     declarations: [
-        LancamentoCadastroComponent,
-        LancamentoPesquisaComponent,
+      LancamentoCadastroComponent,
+      LancamentoPesquisaComponent,
         
     ],
     imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    RouterModule,    
-    RouterLinkWithHref,
+      CommonModule,
+      FormsModule,
+      HttpClientModule,
+      RouterLinkWithHref,
 
-    InputNumberModule,
-    InputTextModule,
-    ButtonModule,
-    TableModule,
-    TooltipModule,
-    InputTextareaModule,
-    CalendarModule,
-    SelectButtonModule,
-    DropdownModule,
+      InputNumberModule,
+      InputTextModule,
+      ButtonModule,
+      TableModule,
+      TooltipModule,
+      InputTextareaModule,
+      CalendarModule,
+      SelectButtonModule,
+      DropdownModule,
 
-    SharedModule,
+      SharedModule,
+      LancamentosRoutingModule,
 ],
-    exports: [
-        LancamentoCadastroComponent,
-        LancamentoPesquisaComponent,
-    ],
+    exports: [],
     providers: [
-        LancamentoService
+      LancamentoService
     ]
 })
 export class LancamentosModule {}

@@ -66,8 +66,9 @@
                     <td class="col-acoes">
                       <span class="p-column-title"></span>
                       <a pButton 
-                         icon="pi pi-pencil" 
                          class="p-button-secondary" 
+                         icon="pi pi-pencil" 
+                         [routerLink]="['/pessoas', pessoa.codigo]"
                          pTooltip="Editar" 
                          tooltipPosition="top"></a>
                       <button pButton 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
@@ -36,7 +37,7 @@ export class LancamentoCadastroComponent implements OnInit {
   // ];
   pessoas: any[] = [];
 
-   tipos = [
+  tipos = [
     { label: 'Receita', value: 'RECEITA' },
     { label: 'Despesa', value: 'DESPESA' }
   ];
@@ -49,20 +50,9 @@ export class LancamentoCadastroComponent implements OnInit {
                private lancamentoService: LancamentoService,
                private messageService: MessageService,
                private errorHandlerService: ErrorHandlerService,
-               private route: ActivatedRoute ) { }
-
-  ngOnInit() {
-    
-    const codigoLancamento = this.route.snapshot.params['codigo'];
-
-    if (codigoLancamento && codigoLancamento !== 'cadastro') {
-      this.carregarLancamento(codigoLancamento);
-    }
-
-    this.buscarCategorias();
-    this.buscarPessoas();
-  }
-
+               private route: ActivatedRoute,
+               private router: Router,
+               private title: Title ) { }
 
   get editando() {
     return Boolean(this.lancamento.codigo);
@@ -72,10 +62,10 @@ export class LancamentoCadastroComponent implements OnInit {
     this.lancamentoService.buscarPorCodigo(codigo)
                           .then(lancamento => {
                             this.lancamento = lancamento;
+                            this.atualizarTitulo();
                           })
                           .catch(error => this.errorHandlerService.handle(error));
   }
-
 
   buscarCategorias() {
     return this.categoriaService.listarTodas()
@@ -93,7 +83,6 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch(error => this.errorHandlerService.handle(error));
   } 
 
-
   salvar(form: NgForm){
     if(this.editando) {
       this.atualizarLancamento(form);
@@ -105,11 +94,14 @@ export class LancamentoCadastroComponent implements OnInit {
 
   salvarLancamento(form: NgForm) {
     this.lancamentoService.adicionar(this.lancamento)
-                          .then(() => {
+                          .then(lancamentoNovo => {
                             this.messageService.add({ severity: 'success', detail: 'Lançamento adicionado com sucesso!' });
                           
-                            form.reset();
-                            this.lancamento = new Lancamento();
+                              // form.reset();
+                              // this.lancamento = new Lancamento();
+                              if (lancamentoNovo) {
+                                this.router.navigate(['/lancamentos', lancamentoNovo.codigo]);
+                              }
                           })
                           .catch(error => this.errorHandlerService.handle(error));
   }  
@@ -120,9 +112,42 @@ export class LancamentoCadastroComponent implements OnInit {
                             this.messageService.add({ severity: 'success', detail: 'Lançamento atualizado com sucesso!' });
                             
                             this.lancamento = lancamento;
+                            this.atualizarTitulo();
+                            
+
                           })
                           .catch(error => this.errorHandlerService.handle(error));
   }
 
+  novo(form: NgForm) {
+
+    form.reset();
+
+    setTimeout(() => {
+      this.lancamento = new Lancamento();
+    }, 1);
+
+    this.router.navigate(['/lancamentos/novo'])
+
+  }
+  
+  atualizarTitulo() {
+    this.title.setTitle(this.editando ? 'Edição de lançamento' : 'Cadastro de lançamento'); 
+  }
+
+  
+  ngOnInit() {
+    
+    const codigoLancamento = this.route.snapshot.params['codigo'];
+
+    this.title.setTitle('Cadastro de lançamento');
+
+    if (codigoLancamento && codigoLancamento !== 'cadastro') {
+      this.carregarLancamento(codigoLancamento);
+    }
+
+    this.buscarCategorias();
+    this.buscarPessoas();
+  }
 
 }

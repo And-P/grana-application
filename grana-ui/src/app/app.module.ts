@@ -28,13 +28,11 @@ import { LancamentoPesquisaComponent } from './lancamentos/lancamento-pesquisa/l
 import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadastro.component';
+import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.component';
 
-const routes: Routes = [
-  { path: 'lancamentos', component: LancamentoPesquisaComponent },
-  { path: 'lancamentos/:codigo', component: LancamentoCadastroComponent },
-  { path: 'lancamentos/cadastro', component: LancamentoCadastroComponent },
-  { path: 'pessoas', component: PessoasPesquisaComponent },
-];
+import { AppRoutingModule } from './app-routing.module';
+
+
 
 
 @NgModule({
@@ -45,11 +43,11 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
     
     CoreModule,
     PessoasModule,
     LancamentosModule,
+    AppRoutingModule,
   ],
   providers: [ 
   ],

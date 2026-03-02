@@ -15,10 +15,12 @@ import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.co
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { PessoaService } from './pessoas-pesquisa/pessoa.service';
 
+import { PessoasRoutingModule } from './pessoas-routing.module';
+
 @NgModule({
    declarations: [
-    PessoaCadastroComponent,
-    PessoasPesquisaComponent,
+     PessoaCadastroComponent,
+     PessoasPesquisaComponent,
    ],
    imports: [
      CommonModule,
@@ -34,13 +36,11 @@ import { PessoaService } from './pessoas-pesquisa/pessoa.service';
      DropdownModule,
 
      SharedModule,
+     PessoasRoutingModule,
    ],
-   exports: [
-     PessoaCadastroComponent,
-     PessoasPesquisaComponent
-   ],
-    providers: [
+   exports: [],
+   providers: [
      PessoaService   
-    ],
+   ],
 })
 export class PessoasModule { }

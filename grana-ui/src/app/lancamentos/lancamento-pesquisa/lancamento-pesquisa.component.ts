@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { CalendarModule } from 'primeng/calendar';
 import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
@@ -13,7 +14,7 @@ import { ErrorHandlerService } from './../../core/error-handler.service';
   templateUrl: './lancamento-pesquisa.component.html',
   styleUrls: ['./lancamento-pesquisa.component.css']
 })
-export class LancamentoPesquisaComponent {
+export class LancamentoPesquisaComponent implements OnInit {
 
 
   // lancamentos = [
@@ -45,7 +46,8 @@ export class LancamentoPesquisaComponent {
   constructor( private lancamentoService: LancamentoService,
                private messageService: MessageService,
                private confirmationService: ConfirmationService,
-               private errorHandlerService: ErrorHandlerService ) { }
+               private errorHandlerService: ErrorHandlerService,
+               private title: Title ) { }
 
 
   pesquisar(pagina: number = 0): void {
@@ -63,10 +65,8 @@ export class LancamentoPesquisaComponent {
   }
 
   mudaPagina(event: LazyLoadEvent) {
-    
     const pagina = event.first! / event.rows!;
     this.pesquisar(pagina);
-
   }
 
   confirmarExclusao(lancamento: any): void {
@@ -90,6 +90,10 @@ export class LancamentoPesquisaComponent {
         this.messageService.add({ severity: 'success', detail: 'Lançamento excluído com sucesso!' });
     })
     .catch( error => this.errorHandlerService.handle(error) );
+  }
+
+  ngOnInit(): void {
+    this.title.setTitle('Pesquisa de lançamentos');
   }
 
 }

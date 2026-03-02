@@ -36,8 +36,6 @@ export class PessoasPesquisaComponent {
   
   @ViewChild('tabela') 
     grid!: Table;
- 
-    
 
   constructor( private pessoaService: PessoaService,
                private messageService: MessageService,
@@ -50,14 +48,13 @@ export class PessoasPesquisaComponent {
 
     this.filtro.pagina = pagina;
 
-    this.pessoaService
-        .pesquisar(this.filtro)
-        .then((dados: any) => {
-          this.pessoas = dados.pessoas;
-          this.totalRegistros = dados.total;
-            console.log(dados);
-        })
-        .catch( error => this.errorHandlerService.handle(error) );
+    this.pessoaService.pesquisar(this.filtro)
+                      .then((dados: any) => {
+                        this.pessoas = dados.pessoas;
+                        this.totalRegistros = dados.total;
+                          // console.log(dados);
+                      })
+                      .catch( error => this.errorHandlerService.handle(error) );
   
   }
 
@@ -68,7 +65,7 @@ export class PessoasPesquisaComponent {
 
   confirmarExclusao(pessoa: any): void {
     this.confirmationService.confirm({
-      message: 'Deseja excluí-lo permanentemente ?',
+      message: 'Deseja excluír permanentemente ?',
       accept: () => {
         this.excluir(pessoa);
       }
@@ -76,30 +73,31 @@ export class PessoasPesquisaComponent {
   }
 
   excluir(pessoa: any) {
-  this.pessoaService.excluir(pessoa.codigo)
-    .then(() => {
-      if (this.grid.first === 0) {
-          this.pesquisar();
-        } else {
-          this.grid.reset();
-        }
+    this.pessoaService.excluir(pessoa.codigo)
+                      .then(() => {
 
-        this.messageService.add({ severity: 'success', detail: 'Pessoa excluída com sucesso!' });
-    })
-    .catch( error => this.errorHandlerService.handle(error) );
+                            this.grid.reset();
+
+                            this.messageService.add({ severity: 'success', detail: 'Pessoa excluída com sucesso!' });
+                      
+                      })
+                      .catch( error => this.errorHandlerService.handle(error) );
   }
 
   mudarStatus(pessoa: any): void {
     const novoStatus = !pessoa.ativo;
 
     this.pessoaService.mudarStatus(pessoa.codigo, novoStatus)
-      .then(() => {
-        const acao = novoStatus ? 'ativada' : 'desativada';
-        pessoa.ativo = novoStatus;
-
-        this.messageService.add({ severity: 'success', detail: `Pessoa ${acao} com sucesso!` });
-      })
-      .catch( error => this.errorHandlerService.handle(error) );
+                      .then(() => {
+     
+                        const acao = novoStatus ? 'ativada' : 'desativada';
+     
+                        pessoa.ativo = novoStatus;
+                      
+                        this.messageService.add({ severity: 'success', detail: `Pessoa ${acao} com sucesso!` });
+     
+                      })
+                      .catch( error => this.errorHandlerService.handle(error) );
   }
 
 }

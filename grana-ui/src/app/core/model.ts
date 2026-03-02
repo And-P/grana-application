@@ -20,22 +20,16 @@ export class Categoria {
 export class Pessoa {
   codigo?: number;
   nome?: string;
+  endereco = new Endereco();
+  ativo: boolean = false;
 }   
 
-// PESSOA Cadastro
-
-export class PessoaCadastro {
-    nome: string = '';
-    endereco = new Endereco();
-    ativo: boolean = false;
-}
-
 export class Endereco {
-  logradouro: string = '';
-  numero: number = 0;
-  complemento: string = '';
-  bairro: string = '';
-  cep: string = '';
-  cidade: string = '';
-  estado: string = '';
+  logradouro?: string = '';
+  numero?: number = 0;
+  complemento?: string = '';
+  bairro?: string = '';
+  cep?: string = '';
+  cidade?: string = '';
+  estado?: string = '';
 }
