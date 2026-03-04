@@ -31,6 +31,7 @@ import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadast
 import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.component';
 
 import { AppRoutingModule } from './app-routing.module';
+import { SegurancaModule } from './seguranca/seguranca.module';
 
 
 
@@ -47,6 +48,7 @@ import { AppRoutingModule } from './app-routing.module';
     CoreModule,
     PessoasModule,
     LancamentosModule,
+    SegurancaModule,
     AppRoutingModule,
   ],
   providers: [ 

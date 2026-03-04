@@ -2,6 +2,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterLinkWithHref, RouterModule } from "@angular/router";
+import { Title } from '@angular/platform-browser';
 
 import localePt from '@angular/common/locales/pt';
 
@@ -15,7 +16,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
-import { Title } from '@angular/platform-browser';
+import { AuthenticationService } from '../seguranca/authentication.service';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -58,7 +59,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MessageService,
     ConfirmationService,
     TranslateService,
-    Title
+    Title,
+    AuthenticationService,
   ]
 })
 export class CoreModule { }

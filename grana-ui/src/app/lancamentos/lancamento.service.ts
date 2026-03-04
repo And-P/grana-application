@@ -20,7 +20,7 @@ export class LancamentoService {
 
   lancamentosUrl = 'http://localhost:8080/lancamentos';
 
-  private authToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzI1MDA2MjcsInVzZXJfbmFtZSI6ImFkbWluQHVtYnJlbGxhLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ0FEQVNUUkFSX0NBVEVHT1JJQSIsIlJPTEVfUEVTUVVJU0FSX1BFU1NPQSIsIlJPTEVfUkVNT1ZFUl9QRVNTT0EiLCJST0xFX0NBREFTVFJBUl9MQU5DQU1FTlRPIiwiUk9MRV9QRVNRVUlTQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUkVNT1ZFUl9MQU5DQU1FTlRPIiwiUk9MRV9DQURBU1RSQVJfUEVTU09BIiwiUk9MRV9QRVNRVUlTQVJfQ0FURUdPUklBIl0sImp0aSI6ImRqcklfV29sai1WZzBzbjE0dUlHY0R1SjNfSSIsImNsaWVudF9pZCI6ImFuZ3VsYXIiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.YjzxVNMA2QS3oN0UsQ64SgHrT5ycYF3C88Ie5ZkElSo';  
+  // private authToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzI1Nzc0MjUsInVzZXJfbmFtZSI6ImFkbWluQHVtYnJlbGxhLmNvbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ0FEQVNUUkFSX0NBVEVHT1JJQSIsIlJPTEVfUEVTUVVJU0FSX1BFU1NPQSIsIlJPTEVfUkVNT1ZFUl9QRVNTT0EiLCJST0xFX0NBREFTVFJBUl9MQU5DQU1FTlRPIiwiUk9MRV9QRVNRVUlTQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUkVNT1ZFUl9MQU5DQU1FTlRPIiwiUk9MRV9DQURBU1RSQVJfUEVTU09BIiwiUk9MRV9QRVNRVUlTQVJfQ0FURUdPUklBIl0sImp0aSI6InZfZVJBaHh5cEh2eVp5UHlrX0RIckM1VXZkNCIsImNsaWVudF9pZCI6ImFuZ3VsYXIiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.lg-YwntStwgXp4ZthLR9IYiQhWOImuwmkj1GbsmuqO0';  
 
   datePipe = new DatePipe('pt-BR');
 
@@ -30,7 +30,7 @@ export class LancamentoService {
   
   pesquisar(filtro: FiltroLancamentosObject): Promise<any> {
 
-      const headers = new HttpHeaders().append('Authorization', this.authToken);
+      // const headers = new HttpHeaders().append('Authorization', this.authToken);
       let params = new HttpParams();
 
       if (filtro.descricao) {
@@ -48,24 +48,24 @@ export class LancamentoService {
       params = params.set('page', filtro.pagina.toString());
       params = params.set('size', filtro.itensPorPagina.toString());
 
-      return this.http
-                  .get<any>(`${this.lancamentosUrl}?resumo`, { headers, params })
-                  .toPromise()
-                  .then( (response) => {
-                            const responseJson = response;
-                            const lancamentos = responseJson.content;
-
-                          const resultado = {
-                            lancamentos: lancamentos,
-                            total: responseJson.totalElements,
-                          };
-
-                      return resultado;  
-                  });     
+      // return this.http.get<any>(`${this.lancamentosUrl}?resumo`, { headers, params })
+      return this.http.get<any>(`${this.lancamentosUrl}?resumo`, { params })
+                      .toPromise()
+                      .then( (response) => {
+                                const responseJson = response;
+                                const lancamentos = responseJson.content;
+                      
+                              const resultado = {
+                                lancamentos: lancamentos,
+                                total: responseJson.totalElements,
+                              };
+                            
+                          return resultado;  
+                      });     
   }
 
   adicionar(lancamento: Lancamento): Promise<Lancamento | undefined> {
-    const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
+    // const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
 
     if (lancamento.dataVencimento) {
       lancamento.dataVencimento = this.datePipe.transform(lancamento.dataVencimento, 'dd/MM/yyyy') as any;
@@ -75,11 +75,12 @@ export class LancamentoService {
       lancamento.dataPagamento = this.datePipe.transform(lancamento.dataPagamento, 'dd/MM/yyyy') as any;
     }
 
-    return this.http.post<Lancamento>(this.lancamentosUrl, lancamento, { headers }).toPromise();
+    // return this.http.post<Lancamento>(this.lancamentosUrl, lancamento, { headers }).toPromise();
+    return this.http.post<Lancamento>(this.lancamentosUrl, lancamento).toPromise();
   }  
 
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
+    // const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
 
     if (lancamento.dataVencimento) {
       lancamento.dataVencimento = this.datePipe.transform(lancamento.dataVencimento, 'dd/MM/yyyy') as any;
@@ -89,7 +90,8 @@ export class LancamentoService {
       lancamento.dataPagamento = this.datePipe.transform(lancamento.dataPagamento, 'dd/MM/yyyy') as any;
     }
 
-    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, { headers })
+    // return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, { headers })
+    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento)
                     .toPromise()
                     .then((response: any) => {
                       this.converterStringsParaDatas([response]);
@@ -98,9 +100,10 @@ export class LancamentoService {
   }
 
   buscarPorCodigo(codigo: number): Promise<Lancamento> {
-    const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
+    // const headers = new HttpHeaders().append('Authorization', this.authToken).append('Content-Type', 'application/json');
 
-    return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers })
+    // return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers })
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`)
                     .toPromise()
                     .then((response: any) => {
         
@@ -111,11 +114,12 @@ export class LancamentoService {
   }
 
   excluir(codigo: number): Promise<void | null> {
-    const headers = new HttpHeaders().append('Authorization', this.authToken);
+    // const headers = new HttpHeaders().append('Authorization', this.authToken);
 
-    return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`, { headers })
-              .toPromise()
-              .then(() => null);
+    // return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`, { headers })
+    return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`)
+                    .toPromise()
+                    .then(() => null);
   }  
 
 

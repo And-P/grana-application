@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
 
@@ -10,15 +11,21 @@ import { PrimeNGConfig } from 'primeng/api';
 export class AppComponent {
   title = 'grana-ui';
 
-  constructor(private primengConfig: PrimeNGConfig, 
-    private translateService: TranslateService
+  constructor( private primengConfig: PrimeNGConfig, 
+               private translateService: TranslateService,
+               private router: Router
   ) {}
 
-    ngOnInit() {
-        this.primengConfig.ripple = true;
+  exibirNavbar() {
+    return this.router.url !== '/login';
+  }
 
-        this.translateService.setDefaultLang('pt');
-        this.translateService.get('primeng')
-          .subscribe(res => this.primengConfig.setTranslation(res));
-    }
+  ngOnInit() {
+      this.primengConfig.ripple = true;
+
+      this.translateService.setDefaultLang('pt');
+      this.translateService.get('primeng')
+                           .subscribe(res => this.primengConfig.setTranslation(res));
+  }
+
 }
