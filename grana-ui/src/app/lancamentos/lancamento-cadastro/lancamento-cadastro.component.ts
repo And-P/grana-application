@@ -127,7 +127,7 @@ export class LancamentoCadastroComponent implements OnInit {
       this.lancamento = new Lancamento();
     }, 1);
 
-    this.router.navigate(['/lancamentos/novo'])
+    this.router.navigate(['/lancamentos/cadastro'])
 
   }
   

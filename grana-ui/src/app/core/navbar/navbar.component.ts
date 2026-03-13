@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthenticationService } from 'src/app/seguranca/authentication.service';
+import { ErrorHandlerService } from '../error-handler.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,11 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  exibindoMenu = false;
+  public exibindoMenu: boolean = false;
+  public usuarioLogado: string = '';
 
-  constructor() { }
+  constructor( public auth: AuthenticationService,
+               private errorHandler: ErrorHandlerService,
+            private router: Router
+   ) { }
 
-  ngOnInit(): void {
+  temPermissao(permissao: string) {
+    return this.auth.temPermissao(permissao);
+  }  
+
+  logout() {
+    this.auth.logout()
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  ngOnInit() {
+    this.usuarioLogado = this.auth.jwtPayload?.user_name.split("@")[0];
+    console.log(this.usuarioLogado);
   }
 
 }

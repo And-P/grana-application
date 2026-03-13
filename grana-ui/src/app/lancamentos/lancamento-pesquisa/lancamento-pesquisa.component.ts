@@ -6,6 +6,7 @@ import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api'
 import { Table } from 'primeng/table';
 
 import { LancamentoService, FiltroLancamentosObject } from './../lancamento.service';
+import { AuthenticationService } from 'src/app/seguranca/authentication.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 
 
@@ -47,7 +48,8 @@ export class LancamentoPesquisaComponent implements OnInit {
                private messageService: MessageService,
                private confirmationService: ConfirmationService,
                private errorHandlerService: ErrorHandlerService,
-               private title: Title ) { }
+               private title: Title,
+              private auth: AuthenticationService ) { }
 
 
   pesquisar(pagina: number = 0): void {
@@ -91,6 +93,11 @@ export class LancamentoPesquisaComponent implements OnInit {
     })
     .catch( error => this.errorHandlerService.handle(error) );
   }
+
+  semPermissao(permissao: string): boolean {
+    return !this.auth.temPermissao(permissao);
+  }
+
 
   ngOnInit(): void {
     this.title.setTitle('Pesquisa de lançamentos');
