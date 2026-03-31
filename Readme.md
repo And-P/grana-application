@@ -8,11 +8,11 @@
 
 
 #### Descrição
-- Aplicação Rest Fullstack que possui uma API SpringBoot e uma SPA Angular com recursos para cadastro e visualização de operações financeiras referentes a receitas e despesas do usuário.
+- Aplicação Rest que possui uma API SpringBoot e uma SPA Angular. Traz recursos para cadastro e visualização de operações financeiras referentes a receitas e despesas do usuário.
 
 
 #### Domínio
-- Lançamentos de receitas e despesas.  
+- Lançamentos
 
 
 #### Diagrama de Classes
