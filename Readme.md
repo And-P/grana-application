@@ -1,11 +1,11 @@
+<br/>
+<br/>
+
 <div>
-  <img src="grana-application-overview.png" alt="architecture" width=auto>
+  <img src="grana-api-uml.jpg" alt="class-diagram-uml" width=auto>
 </div>
 
 <br/>
-<br/>
-<hr/>
-
 
 #### Descrição
 - Aplicação Rest Fullstack que possui uma API SpringBoot e uma SPA Angular com recursos para cadastro e visualização de operações financeiras referentes a receitas e despesas do usuário.
@@ -14,11 +14,76 @@
 #### Domínio
 - Lançamentos de receitas e despesas.  
 
-
-#### Diagrama de Classes
-<div>
-  <img src="grana-api-uml.jpg" alt="class-diagram-uml" width=auto>
-</div>
+<table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Endpoint</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GET</td>
+        <td>/categorias</td>
+      </tr>
+      <tr>
+        <td>POST</td>
+        <td>/categorias</td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>/categorias/{codigo}</td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>/pessoas?nome=...</td>
+      </tr>
+      <tr>
+        <td>POST</td>
+        <td>/pessoas</td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>/pessoas/{codigo}</td>
+      </tr>
+      <tr>
+        <td>DELETE</td>
+        <td>/pessoas/{codigo}</td>
+      </tr>
+      <tr>
+        <td>PUT</td>
+        <td>/pessoas/{codigo}</td>
+      </tr>
+      <tr>
+        <td>PUT</td>
+        <td>/pessoas/{codigo}/ativo</td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>/lancamentos?resumo=true</td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>/lancamentos</td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>/lancamentos/{codigo}</td>
+      </tr>
+      <tr>
+        <td>POST</td>
+        <td>/lancamentos</td>
+      </tr>
+      <tr>
+        <td>DELETE</td>
+        <td>/lancamentos/{codigo}</td>
+      </tr>
+      <tr>
+        <td>PUT</td>
+        <td>/lancamentos/{codigo}</td>
+      </tr>
+    </tbody>
+  </table>
 
 
 #### Tecnologias

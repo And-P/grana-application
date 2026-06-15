@@ -74,6 +74,7 @@ build/
 
 ### VS Code ###
 .vscode/
+.claude/
 
 
 

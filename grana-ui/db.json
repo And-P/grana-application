@@ -19,6 +19,98 @@
     {
       "nome": "Rio de Janeiro",
       "id": 5
+    },
+    {
+      "nome": "Rio Branco",
+      "id": 6
+    },
+    {
+      "nome": "Maceió",
+      "id": 7
+    },
+    {
+      "nome": "Macapá",
+      "id": 8
+    },
+    {
+      "nome": "Manaus",
+      "id": 9
+    },
+    {
+      "nome": "Brasília",
+      "id": 10
+    },
+    {
+      "nome": "Vitória",
+      "id": 11
+    },
+    {
+      "nome": "Goiânia",
+      "id": 12
+    },
+    {
+      "nome": "São Luís",
+      "id": 13
+    },
+    {
+      "nome": "Cuiabá",
+      "id": 14
+    },
+    {
+      "nome": "Campo Grande",
+      "id": 15
+    },
+    {
+      "nome": "Belo Horizonte",
+      "id": 16
+    },
+    {
+      "nome": "Belém",
+      "id": 17
+    },
+    {
+      "nome": "João Pessoa",
+      "id": 18
+    },
+    {
+      "nome": "Curitiba",
+      "id": 19
+    },
+    {
+      "nome": "Recife",
+      "id": 20
+    },
+    {
+      "nome": "Teresina",
+      "id": 21
+    },
+    {
+      "nome": "Natal",
+      "id": 22
+    },
+    {
+      "nome": "Porto Alegre",
+      "id": 23
+    },
+    {
+      "nome": "Porto Velho",
+      "id": 24
+    },
+    {
+      "nome": "Boa Vista",
+      "id": 25
+    },
+    {
+      "nome": "Florianópolis",
+      "id": 26
+    },
+    {
+      "nome": "Aracaju",
+      "id": 27
+    },
+    {
+      "nome": "Palmas",
+      "id": 28
     }
   ]
 }
