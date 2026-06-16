@@ -7,13 +7,14 @@
 
 <br/>
 
-#### Descrição
-- Aplicação Rest que possui uma API SpringBoot e uma SPA Angular. Traz recursos para cadastro e visualização de operações financeiras referentes a receitas e despesas do usuário.
+#### Description
+- A fullstack application Grana API is a Spring‑Boot, JWT‑secured REST service that exposes CRUD and reporting endpoints for a personal finance management system user interface made by Angular.
 
 
-#### Domínio
+#### Domain
 - Lançamentos
 
+#### Map
 <table>
     <thead>
       <tr>
@@ -86,7 +87,7 @@
   </table>
 
 
-#### Tecnologias
+#### Technologies
 - Java [17]
 - Node [16.10.0]
 - TypeScript [4.7.2]
