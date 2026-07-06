@@ -49,7 +49,7 @@ export class LancamentoPesquisaComponent implements OnInit {
                private confirmationService: ConfirmationService,
                private errorHandlerService: ErrorHandlerService,
                private title: Title,
-              private auth: AuthenticationService ) { }
+               private auth: AuthenticationService ) { }
 
 
   pesquisar(pagina: number = 0): void {

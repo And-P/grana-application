@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 
 import { PessoaService, PessoaFiltro } from './pessoa.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
+import { AuthenticationService } from 'src/app/seguranca/authentication.service';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class PessoasPesquisaComponent {
   constructor( private pessoaService: PessoaService,
                private messageService: MessageService,
                private confirmationService: ConfirmationService,
-               private errorHandlerService: ErrorHandlerService ) { }
+               private errorHandlerService: ErrorHandlerService,
+              private auth: AuthenticationService ) { }
 
 
 
@@ -98,6 +100,10 @@ export class PessoasPesquisaComponent {
      
                       })
                       .catch( error => this.errorHandlerService.handle(error) );
+  }
+
+  naoTemPermissao(permissao: string) {
+    return !this.auth.temPermissao(permissao);
   }
 
 }

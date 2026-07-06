@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLinkWithHref, RouterModule } from "@angular/router";
 
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -14,45 +13,38 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
-
 import { SharedModule } from '../shared/shared.module';
-import { LancamentosRoutingModule } from './lancamentos-routing.module';
-
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentoPesquisaComponent } from './lancamento-pesquisa/lancamento-pesquisa.component';
-
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 import { LancamentoService } from './lancamento.service';
 
-
-
 @NgModule({
-    declarations: [
-      LancamentoCadastroComponent,
-      LancamentoPesquisaComponent,
-        
-    ],
-    imports: [
-      CommonModule,
-      FormsModule,
-      HttpClientModule,
-      RouterLinkWithHref,
+  imports: [
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
 
-      InputNumberModule,
-      InputTextModule,
-      ButtonModule,
-      TableModule,
-      TooltipModule,
-      InputTextareaModule,
-      CalendarModule,
-      SelectButtonModule,
-      DropdownModule,
+    InputNumberModule,
+    InputTextModule,
+    ButtonModule,
+    TableModule,
+    TooltipModule,
+    InputTextareaModule,
+    CalendarModule,
+    SelectButtonModule,
+    DropdownModule,
 
-      SharedModule,
-      LancamentosRoutingModule,
-],
-    exports: [],
-    providers: [
-      LancamentoService
-    ]
+    SharedModule,
+    LancamentosRoutingModule
+  ],
+  declarations: [
+    LancamentoCadastroComponent,
+    LancamentoPesquisaComponent
+  ],
+  providers: [
+    LancamentoService    
+  ],
+  exports: []
 })
-export class LancamentosModule {}
+export class LancamentosModule { }

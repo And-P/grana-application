@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
 
   constructor( public auth: AuthenticationService,
                private errorHandler: ErrorHandlerService,
-            private router: Router
+               private router: Router
    ) { }
 
   temPermissao(permissao: string) {
@@ -25,9 +25,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.auth.logout()
-      .then(() => {
-        this.router.navigate(['/login']);
-      })
+      .then(() => { this.router.navigate(['/login'])})
       .catch(erro => this.errorHandler.handle(erro));
   }
 

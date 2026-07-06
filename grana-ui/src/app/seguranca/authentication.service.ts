@@ -34,9 +34,11 @@ export class AuthenticationService {
     return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true } )
       .toPromise()
       .then((response: any) => {
+        console.log("Login bem-sucedido ? : ", response);
         this.armazenarToken(response['access_token']);
       })
       .catch(response => {
+        console.error("Erro ao fazer login: ", response);
         if (response.status === 400) {
           if (response.error.error === 'invalid_grant') {
             return Promise.reject('Usuário ou senha inválida!');
@@ -49,7 +51,8 @@ export class AuthenticationService {
 
   private armazenarToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
-
+    console.log(this.jwtPayload);
+    // token armazenado (no navegador do usuário) no localStorage para que seja persistido mesmo após o refresh da página
     localStorage.setItem('token', token);
   }
 
@@ -61,21 +64,22 @@ export class AuthenticationService {
     }
   }
 
+  // Verifica se o usuário tem a permissão para acessar determinado componente. 
   public temPermissao(permissao: string) {
     return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
   }
 
+  // Verifica se o usuário tem alguma das permissões para acessar determinada rota.
   public temAlgumaPermissao(roles: any) {
     for (const role of roles) {
       if (this.temPermissao(role)) {
         return true;
       }
     }
-
     return false;
   }
 
-  public novoAccessToken(): Promise<void> {
+  novoAccessToken(): Promise<void> {
 
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
@@ -84,7 +88,7 @@ export class AuthenticationService {
     const body = `grant_type=refresh_token`;
     
 
-    return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true } )
+    return this.http.post<any>(this.oauthTokenUrl, body, { headers, withCredentials: true } )
       .toPromise()
       .then((response: any) => { 
 
@@ -97,16 +101,18 @@ export class AuthenticationService {
       .catch(erro => {
         
         console.error('Erro ao renovar token', erro);
-        return Promise.reject(erro);
+        return Promise.resolve();
 
       });
   }
 
+  // O Access Token é inválido quando ele não existe ou quando ele expirou
   public isAccessTokenInvalido() {
     const token = localStorage.getItem('token');
     return !token || this.jwtHelper.isTokenExpired(token);
   }
 
+  // Limpa o Access Token do localStorage e também a propriedade jwtPayload
   limparAccessToken() {
     localStorage.removeItem('token');
     this.jwtPayload = null;
@@ -114,10 +120,8 @@ export class AuthenticationService {
 
   logout() {
     return this.http.delete(this.tokensRevokeUrl, { withCredentials: true })
-      .toPromise()
-      .then(() => {
-        this.limparAccessToken();
-      });
+      .toPromise()  
+      .then(() => { this.limparAccessToken(); });
   }
 
 }

@@ -9,7 +9,8 @@ app.get('/*', function (req, res) {
   res.sendFile(__dirname + '/dist/' + projectName + '/index.html');
 });
 
-app.listen(process.env.PORT || 8000);
+app.listen(4200);
+// app.listen(process.env.PORT || 8000);
 
 // add as tags no package.json <script> para fazer deploy no Heroku
 // "start": "node server.js",

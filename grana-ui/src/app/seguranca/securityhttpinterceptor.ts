@@ -7,7 +7,11 @@ import { mergeMap } from "rxjs/operators";
 import { AuthenticationService } from "./authentication.service";
 
 
-export class NotAuthenticatedError { }
+export class NotAuthenticatedError { 
+  constructor() {
+    console.log("Meu NotAuthenticatedError"); 
+  }
+}
 
 
 @Injectable()

@@ -1,60 +1,32 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { registerLocaleData } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-
-import localePt from '@angular/common/locales/pt';
-
-registerLocaleData(localePt);
-
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
-import { InputMaskModule } from 'primeng/inputmask';
-import { DropdownModule } from "primeng/dropdown";
-
-
-import { AppComponent } from './app.component';
-
-import { CoreModule } from './core/core.module';
-import { PessoasModule } from './pessoas/pessoas.module';
-import { LancamentosModule } from './lancamentos/lancamentos.module';
-
-import { LancamentoPesquisaComponent } from './lancamentos/lancamento-pesquisa/lancamento-pesquisa.component';
-import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
-import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
-import { PessoaCadastroComponent } from './pessoas/pessoa-cadastro/pessoa-cadastro.component';
-import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.component';
 
 import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
+import { LancamentosModule } from './lancamentos/lancamentos.module';
+import { PessoasModule } from './pessoas/pessoas.module';
 import { SegurancaModule } from './seguranca/seguranca.module';
-
-
-
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    
+
     CoreModule,
-    PessoasModule,
     LancamentosModule,
+    PessoasModule,
     SegurancaModule,
-    AppRoutingModule,
+
+    AppRoutingModule
   ],
-  providers: [ 
-  ],
-  bootstrap: [
-    AppComponent
-  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

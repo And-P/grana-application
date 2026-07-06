@@ -76,7 +76,8 @@
                               class="p-button-danger" 
                               pTooltip="Excluir" 
                               tooltipPosition="top"
-                              (click)="confirmarExclusao(pessoa)"></button>
+                              (click)="confirmarExclusao(pessoa)"
+                              [disabled]="naoTemPermissao('ROLE_REMOVER_PESSOA')"></button>
                     </td>  
                 </tr>
             </ng-template>       
