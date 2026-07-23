@@ -1,3 +1,4 @@
+import { ComplementService } from '../lancamento-pesquisa/complement.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,10 +9,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MessageService } from 'primeng/api';
 
-import { Lancamento } from 'src/app/core/model';
-import { LancamentoService } from '../lancamento.service';
-import { PessoaService } from './../../pessoas/pessoas-pesquisa/pessoa.service';
-import { CategoriaService } from '../../categorias/categoria.service';
+import { Lancamento } from 'src/app/core/lancamento.model';
+
+import { LancamentoService } from '../lancamento-pesquisa/lancamento.service';
+import { PessoasService } from 'src/app/pessoas/pessoas-pesquisa/pessoas.service';
+
 import { MessageComponent } from '../../shared/message/message.component';
 import { ErrorHandlerService } from './../../core/error-handler.service';
 
@@ -45,8 +47,7 @@ export class LancamentoCadastroComponent implements OnInit {
   lancamento = new Lancamento();
 
 
-  constructor( private categoriaService: CategoriaService,
-               private pessoaService: PessoaService,
+  constructor( private complementService: ComplementService,
                private lancamentoService: LancamentoService,
                private messageService: MessageService,
                private errorHandlerService: ErrorHandlerService,
@@ -68,7 +69,7 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   buscarCategorias() {
-    return this.categoriaService.listarTodas()
+    return this.complementService.listarCategorias()
       .then(categorias => {
         this.categorias = categorias.map((c: any) => ({ label: c.nome, value: c.codigo }));
       })
@@ -76,7 +77,7 @@ export class LancamentoCadastroComponent implements OnInit {
   } 
 
   buscarPessoas() {
-    return this.pessoaService.listarTodas()
+    return this.complementService.listarPessoas()
       .then(pessoas => {
         this.pessoas = pessoas.map((p: any) => ({ label: p.nome, value: p.codigo }));
       })

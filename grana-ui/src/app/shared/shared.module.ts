@@ -7,7 +7,11 @@ import { MessageComponent } from './message/message.component';
   imports: [
     CommonModule
   ],
-  declarations: [MessageComponent],
-  exports: [MessageComponent]
+  declarations: [
+    MessageComponent
+  ],
+  exports: [
+    MessageComponent
+  ]
 })
 export class SharedModule { }

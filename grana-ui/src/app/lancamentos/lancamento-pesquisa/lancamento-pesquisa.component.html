@@ -64,7 +64,7 @@
                  [responsive]="true"
                  [lazy]="true"
                  [totalRecords]="totalRegistros"
-                 (onLazyLoad)="mudaPagina($event)"
+                 (onLazyLoad)="aoMudarPagina($event)"
                  emptyMessage="Nenhum lançamento encontrado"
                  #tabela>
             
@@ -104,7 +104,7 @@
                               pTooltip="Excluir" 
                               tooltipPosition="top"
                               (click)="confirmarExclusao(lancamento)"
-                              [disabled]="semPermissao('ROLE_REMOVER_LANCAMENTO')"
+                              [disabled]="naoTemPermissao('ROLE_REMOVER_LANCAMENTO')"
                               >
                       </button>
                     </td>  

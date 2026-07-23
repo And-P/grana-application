@@ -3,9 +3,9 @@ import { Component, ViewChild } from '@angular/core';
 import { LazyLoadEvent, MessageService, ConfirmationService  } from 'primeng/api';
 import { Table } from 'primeng/table';
 
-import { PessoaService, PessoaFiltro } from './pessoa.service';
+import { PessoasService, PessoaFiltro } from './pessoas.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
-import { AuthenticationService } from 'src/app/seguranca/authentication.service';
+import { AuthenticationService } from 'src/app/seguranca/auth.service';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class PessoasPesquisaComponent {
   @ViewChild('tabela') 
     grid!: Table;
 
-  constructor( private pessoaService: PessoaService,
+  constructor( private pessoaService: PessoasService,
                private messageService: MessageService,
                private confirmationService: ConfirmationService,
                private errorHandlerService: ErrorHandlerService,

@@ -8,10 +8,12 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
-import { SecurityHttpInterceptor } from './securityhttpinterceptor';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { SegurancaRoutingModule } from './seguranca-routing.module';
+
 import { AuthGuard } from './auth.guard';
+import { SecurityHttpInterceptor } from './securityhttpinterceptor';
+
+import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { environment } from 'src/environments/environment';
 
 

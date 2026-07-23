@@ -1,13 +1,14 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 
-import { DatePipe } from '@angular/common';
-import { Lancamento } from '../core/model';
+import { Lancamento } from 'src/app/core/lancamento.model';
 import { environment } from 'src/environments/environment';
 
 
-export class FiltroLancamentosObject {
+export class LancamentoFiltro {
   descricao: string = '';
   dataVencimentoInicio?: Date;
   dataVencimentoFim?: Date;
@@ -15,7 +16,9 @@ export class FiltroLancamentosObject {
   itensPorPagina = 5;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LancamentoService {
 
   lancamentosUrl: string;
@@ -28,7 +31,7 @@ export class LancamentoService {
    }
   
   
-  pesquisar(filtro: FiltroLancamentosObject): Promise<any> {
+  pesquisar(filtro: LancamentoFiltro): Promise<any> {
 
     let params = new HttpParams();
 

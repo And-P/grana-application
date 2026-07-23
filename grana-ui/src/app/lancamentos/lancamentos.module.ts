@@ -1,6 +1,6 @@
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
@@ -14,10 +14,13 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { SharedModule } from '../shared/shared.module';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
+
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentoPesquisaComponent } from './lancamento-pesquisa/lancamento-pesquisa.component';
-import { LancamentosRoutingModule } from './lancamentos-routing.module';
-import { LancamentoService } from './lancamento.service';
+
+import { LancamentoService } from './lancamento-pesquisa/lancamento.service';
+import { ComplementService } from './lancamento-pesquisa/complement.service';
 
 @NgModule({
   imports: [
@@ -43,7 +46,8 @@ import { LancamentoService } from './lancamento.service';
     LancamentoPesquisaComponent
   ],
   providers: [
-    LancamentoService    
+    LancamentoService,
+    ComplementService
   ],
   exports: []
 })

@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { CalendarModule } from 'primeng/calendar';
-import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 
-import { LancamentoService, FiltroLancamentosObject } from './../lancamento.service';
-import { AuthenticationService } from 'src/app/seguranca/authentication.service';
+import { LancamentoService, LancamentoFiltro } from './../lancamento-pesquisa/lancamento.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
+import { AuthenticationService } from 'src/app/seguranca/auth.service';
 
 
 @Component({
@@ -17,6 +16,9 @@ import { ErrorHandlerService } from './../../core/error-handler.service';
 })
 export class LancamentoPesquisaComponent implements OnInit {
 
+  filtro = new LancamentoFiltro();
+
+  totalRegistros = 0;
 
   // lancamentos = [
   //   { tipo: 'DESPESA', descricao: 'Compra de pão', dataVencimento: '30/06/2017',
@@ -35,21 +37,17 @@ export class LancamentoPesquisaComponent implements OnInit {
   //     dataPagamento: null, valor: 180, pessoa: 'Academia Top' }
   // ];
   lancamentos: any[] = [];
-  
-  totalRegistros = 0;
 
-  filtro = new FiltroLancamentosObject();
-
-  @ViewChild('tabela') 
-  grid!: Table;
+  @ViewChild('tabela') grid!: Table;
 
 
   constructor( private lancamentoService: LancamentoService,
+               private auth: AuthenticationService,
+               private errorHandlerService: ErrorHandlerService,
                private messageService: MessageService,
                private confirmationService: ConfirmationService,
-               private errorHandlerService: ErrorHandlerService,
-               private title: Title,
-               private auth: AuthenticationService ) { }
+               private title: Title 
+              ) { }
 
 
   pesquisar(pagina: number = 0): void {
@@ -66,7 +64,7 @@ export class LancamentoPesquisaComponent implements OnInit {
 
   }
 
-  mudaPagina(event: LazyLoadEvent) {
+  aoMudarPagina(event: LazyLoadEvent) {
     const pagina = event.first! / event.rows!;
     this.pesquisar(pagina);
   }
@@ -91,10 +89,9 @@ export class LancamentoPesquisaComponent implements OnInit {
 
         this.messageService.add({ severity: 'success', detail: 'Lançamento excluído com sucesso!' });
     })
-    .catch( error => this.errorHandlerService.handle(error) );
   }
 
-  semPermissao(permissao: string): boolean {
+  naoTemPermissao(permissao: string): boolean {
     return !this.auth.temPermissao(permissao);
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from 'src/app/seguranca/authentication.service';
+import { AuthenticationService } from 'src/app/seguranca/auth.service';
 import { ErrorHandlerService } from '../error-handler.service';
 
 @Component({
@@ -19,6 +19,11 @@ export class NavbarComponent implements OnInit {
                private router: Router
    ) { }
 
+
+  ngOnInit() {
+    this.usuarioLogado = this.auth.jwtPayload?.user_name.split("@")[0];
+  }
+
   temPermissao(permissao: string) {
     return this.auth.temPermissao(permissao);
   }  
@@ -28,10 +33,4 @@ export class NavbarComponent implements OnInit {
       .then(() => { this.router.navigate(['/login'])})
       .catch(erro => this.errorHandler.handle(erro));
   }
-
-  ngOnInit() {
-    this.usuarioLogado = this.auth.jwtPayload?.user_name.split("@")[0];
-    console.log(this.usuarioLogado);
-  }
-
 }

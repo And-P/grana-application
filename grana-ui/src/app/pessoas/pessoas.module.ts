@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { PessoasRoutingModule } from './pessoas-routing.module';
 
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
-import { PessoaService } from './pessoas-pesquisa/pessoa.service';
+import { PessoasService } from './pessoas-pesquisa/pessoas.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { PessoaService } from './pessoas-pesquisa/pessoa.service';
     PessoasRoutingModule
   ],
   providers: [
-    PessoaService
+    PessoasService
   ],
   exports: []
 })

@@ -8,8 +8,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MessageService } from 'primeng/api';
 
-import { PessoaService } from '../pessoas-pesquisa/pessoa.service';
-import { Pessoa } from 'src/app/core/model';
+import { PessoasService } from '../pessoas-pesquisa/pessoas.service';
+import { Pessoa } from 'src/app/core/pessoa.model';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
@@ -69,7 +69,7 @@ export class PessoaCadastroComponent {
 
   pessoa = new Pessoa();
 
-  constructor( private pessoaService: PessoaService,
+  constructor( private pessoaService: PessoasService,
                private messageService: MessageService,
                private errorHandler: ErrorHandlerService,
                private route: ActivatedRoute,

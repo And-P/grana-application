@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { Pessoa } from 'src/app/core/model';
+import { Pessoa } from 'src/app/core/pessoa.model';
 import { environment } from 'src/environments/environment';
 
 
@@ -11,8 +11,10 @@ export class PessoaFiltro {
     itensPorPagina = 5;
 }
 
-@Injectable()
-export class PessoaService {
+@Injectable({
+  providedIn: 'root'
+})
+export class PessoasService {
 
   pessoasUrl: string;
   
@@ -42,14 +44,6 @@ export class PessoaService {
                           return resultado;
                       });
   }
-  
-  listarTodas(): Promise<any> {
-
-      return this.http.get(`${this.pessoasUrl}`)
-                      .toPromise()
-                      .then((response: any) => response.content);
-  }
-  
 
   
   adicionar(pessoa: any): Promise<Pessoa> {

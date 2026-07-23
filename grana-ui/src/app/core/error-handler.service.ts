@@ -32,6 +32,7 @@ export class ErrorHandlerService {
 
     } else {
       msg = 'Erro ao processar serviço remoto. Tente novamente.';
+      
       console.error('Ocorreu um erro', errorResponse);
     }
 

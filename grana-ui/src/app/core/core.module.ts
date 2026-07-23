@@ -1,6 +1,6 @@
-import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+
 import localePt from '@angular/common/locales/pt';
 
 import { NgModule } from '@angular/core';
@@ -14,9 +14,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
-import { AuthenticationService } from './../seguranca/authentication.service';
+import { AuthenticationService } from '../seguranca/auth.service';
 import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
 registerLocaleData(localePt, 'pt-BR');

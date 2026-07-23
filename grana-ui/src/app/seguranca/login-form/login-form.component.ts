@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from '../auth.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 
