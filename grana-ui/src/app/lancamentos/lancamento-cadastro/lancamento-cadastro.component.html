@@ -1,7 +1,7 @@
 <div class="container">
 
   
-    <form #lancamentoForm="ngForm"  (ngSubmit)="salvar(lancamentoForm)"  autocomplete="off">
+    <form [formGroup]="lancamentoForm" (ngSubmit)="salvar()"  autocomplete="off">
         
         <div class="p-grid">
 
@@ -12,9 +12,8 @@
             <div class="p-col-12">
               <p-selectButton 
                   name="tipo"
-                  #tipo="ngModel"
                   [options]="tipos.reverse()" 
-                  [(ngModel)]="lancamento.tipo"
+                  formControlName="tipo"
                   >
               </p-selectButton>
             </div>
@@ -28,15 +27,13 @@
                           dateFormat="dd/mm/yy"
                           [inline]="false"
                           [readonlyInput]="false"
-                          [showIcon]="false" 
-                          [(ngModel)]="lancamento.dataVencimento" 
-                          #vencimento="ngModel" 
-                          [required]="true"
+                          [showIcon]="false"
+                          formControlName="dataVencimento" 
                           >
                       </p-calendar>
 
                       <app-message
-                            [control]="vencimento.control"
+                            [control]="lancamentoForm.get('dataVencimento')"
                             error="required"
                             text="Data de vencimento obrigatória." 
                             >
@@ -44,12 +41,12 @@
                 </div>
 
                 <div class="xl:col-6 lg:col-3 md:col-3 p-fluid">
-                  <label>{{ tipo.value === 'RECEITA' ? 'Receita' : 'Despesa' }}</label>
+                  <label>{{ lancamentoForm.get('tipo')?.value === 'RECEITA' ? 'Receita' : 'Despesa' }}</label>
                       <p-calendar 
                           name="dataPagamento"
                           dateFormat="dd/mm/yy"
                           [showIcon]="false" 
-                          [(ngModel)]="lancamento.dataPagamento"
+                          formControlName="dataPagamento"
                           >
                       </p-calendar>    
 
@@ -60,22 +57,19 @@
                   <input pInputText 
                          name="descricao"
                          type="text"
-                         [(ngModel)]="lancamento.descricao"
-                         #descricao="ngModel"
-                         [required]="true"
-                         minlength="2"
+                         formControlName="descricao"
                          >
 
                          <app-message
-                            [control]="descricao.control"
-                            error="required"
+                            [control]="lancamentoForm.get('descricao')"
+                            error="campoRequerido"
                             text="Descrição é obrigatória." 
                           ></app-message>
 
                           <app-message
-                            [control]="descricao.control"
-                            error="minlength"
-                            text="Mínimo {{ descricao.errors?.['minlength']?.requiredLength }} caracteres. Você digitou apenas {{ descricao.errors?.['minlength']?.actualLength }}" 
+                            [control]="lancamentoForm.get('descricao')"
+                            error="tamanhoMinimo"
+                            text="Mínimo de {{ lancamentoForm.get('descricao')?.errors?.['tamanhoMinimo']?.tamanho }} caracteres. " 
                           ></app-message>
                            
                 </div>
@@ -88,37 +82,31 @@
                       mode="currency" 
                       currency="BRL"
                       locale="pt-BR"
-                      [(ngModel)]="lancamento.valor"
-                      #valor="ngModel"
-                      [required]="true"
                       placeholder="0,00"
+                      formControlName="valor"
                       >
                   </p-inputNumber>
                 </div>
 
-                <div class="lg:col-6 md:col-6 sm:col-12 p-fluid">
+                <div class="lg:col-6 md:col-6 sm:col-12 p-fluid" formGroupName="categoria">
                   <label>Categoria: </label>
                   <p-dropdown 
                       name="categoria"
                       [options]="categorias" 
-                      [(ngModel)]="lancamento.categoria.codigo"
-                      #categoria
-                      [required]="true"
                       placeholder="Selecione" 
+                      formControlName="codigo"
                       >
                   </p-dropdown>
                 </div>
 
-                <div class="lg:col-6 md:col-6 sm:col-12 p-fluid">
+                <div class="lg:col-6 md:col-6 sm:col-12 p-fluid" formGroupName="pessoa">
                   <label>Pessoa: </label>
                   <p-dropdown 
                       name="pessoa"
                       [options]="pessoas" 
-                      [(ngModel)]="lancamento.pessoa.codigo"
-                      #pessoa
                       [filter]="true"
-                      [required]="true"
                       placeholder="Selecione" 
+                      formControlName="codigo"
                       >
                   </p-dropdown>
                 </div>
@@ -127,8 +115,9 @@
                   <label>Observação</label>
                   <textarea pInputTextarea 
                             name="observacao"
-                            [(ngModel)]="lancamento.observacao"
-                            rows="3">
+                            rows="3"
+                            formControlName="observacao"
+                            >
                   </textarea>
                 </div>
 
@@ -149,7 +138,7 @@
                         class="p-button-secondary" 
                         type="button" 
                         label="Novo"
-                        (click)="novo(lancamentoForm)"></button>
+                        (click)="novo()"></button>
               </div>
               <div class="lg:col-4 md:col-4 sm:col-6 p-fluid">  
                 <a routerLink="/lancamentos" class="p-button p-button-text">Voltar para a pesquisa</a>
