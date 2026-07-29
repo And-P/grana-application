@@ -1,5 +1,6 @@
 package me.umbrella.grana.api.resource;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +8,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
+import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
@@ -42,8 +45,19 @@ public class LancamentoResource {
 	
 	@Autowired
 	private MessageSource messageSource;
-	
-	
+
+
+	@GetMapping("/estatisticas/por-dia")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
+	public List<LancamentosEstatisticaPorDia> porDia() {
+		return this.lancamentoRepository.porDia(LocalDate.now().withMonth(1));
+	}
+
+	@GetMapping("/estatisticas/por-categoria")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
+	public List<LancamentosEstatisticaPorCategoria> porCategoria() {
+		return this.lancamentoRepository.porCategoria(LocalDate.now());
+	}
 	
 	@GetMapping(params = "resumo")
  	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
