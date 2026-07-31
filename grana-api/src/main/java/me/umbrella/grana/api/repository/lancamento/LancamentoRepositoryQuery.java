@@ -1,5 +1,6 @@
 package me.umbrella.grana.api.repository.lancamento;
 
+import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
 import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
 import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public interface LancamentoRepositoryQuery {
 
+	public List<LancamentoEstatisticaPorPessoa> porPessoa(LocalDate inicio, LocalDate fim);
 	public List<LancamentosEstatisticaPorDia> porDia(LocalDate mesRef);
 	public List<LancamentosEstatisticaPorCategoria> porCategoria(LocalDate mesRef);
 

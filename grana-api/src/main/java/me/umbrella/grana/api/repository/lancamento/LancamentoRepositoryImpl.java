@@ -1,5 +1,6 @@
 package me.umbrella.grana.api.repository.lancamento;
 
+import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
 import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
 import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,29 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 	@PersistenceContext
 	private EntityManager manager;
 
+	@Override
+	public List<LancamentoEstatisticaPorPessoa> porPessoa(LocalDate inicio, LocalDate fim) {
+		CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+		CriteriaQuery<LancamentoEstatisticaPorPessoa> criteriaQuery = criteriaBuilder.createQuery(LancamentoEstatisticaPorPessoa.class);
+		Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+
+		criteriaQuery.select(criteriaBuilder.construct(
+				LancamentoEstatisticaPorPessoa.class,
+				root.get(Lancamento_.tipo),
+				root.get(Lancamento_.pessoa),
+				criteriaBuilder.sum(root.get(Lancamento_.valor))));
+
+		criteriaQuery.where(
+				criteriaBuilder.greaterThanOrEqualTo(root.get(Lancamento_.dataVencimento), inicio),
+				criteriaBuilder.lessThanOrEqualTo(root.get(Lancamento_.dataVencimento), fim)
+		);
+
+		criteriaQuery.groupBy(root.get(Lancamento_.tipo), root.get(Lancamento_.pessoa));
+
+		TypedQuery<LancamentoEstatisticaPorPessoa> typedQuery = manager.createQuery(criteriaQuery);
+
+		return typedQuery.getResultList();
+	}
 
 	@Override
 	public List<LancamentosEstatisticaPorDia> porDia(LocalDate mesRef) {

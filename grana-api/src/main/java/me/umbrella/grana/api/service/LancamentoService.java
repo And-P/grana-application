@@ -1,5 +1,10 @@
 package me.umbrella.grana.api.service;
 
+import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +15,10 @@ import me.umbrella.grana.api.repository.LancamentoRepository;
 import me.umbrella.grana.api.repository.PessoaRepository;
 import me.umbrella.grana.api.service.exception.PessoaInexistenteOuInativaException;
 
-import java.util.Optional;
+import java.io.InputStream;
+import java.time.LocalDate;
+import java.util.*;
+import java.sql.Date;
 
 @Service
 public class LancamentoService {
@@ -20,7 +28,23 @@ public class LancamentoService {
 	
 	@Autowired 
 	private LancamentoRepository lancamentoRepository;
-	
+
+
+	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
+		List<LancamentoEstatisticaPorPessoa> dados = lancamentoRepository.porPessoa(inicio, fim);
+
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("DT_INICIO", Date.valueOf(inicio));
+		parametros.put("DT_FIM", Date.valueOf(fim));
+		parametros.put("REPORT_LOCALE", new Locale("pt", "BR"));
+
+		InputStream inputStream = this.getClass().getResourceAsStream(
+				"/relatorios/LancamentosPorPessoa.jasper");
+
+		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, new JRBeanCollectionDataSource(dados));
+
+		return JasperExportManager.exportReportToPdf(jasperPrint);
+	}
 
 	public Lancamento salvar(Lancamento lancamento) {
 		Pessoa pessoa = pessoaRepository.getReferenceById(lancamento.getPessoa().getCodigo());
