@@ -7,6 +7,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import me.umbrella.grana.api.model.Lancamento;
@@ -22,13 +23,18 @@ import java.sql.Date;
 
 @Service
 public class LancamentoService {
-	
+
 	@Autowired
-	private PessoaRepository pessoaRepository;
-	
-	@Autowired 
 	private LancamentoRepository lancamentoRepository;
 
+	@Autowired
+	private PessoaRepository pessoaRepository;
+
+	//@Scheduled(fixedDelay = 1000 * 2)
+	@Scheduled(cron="0 14 14 * * *")
+	public void alertaLancamentosVencidos() {
+		System.out.println("Scheduled");
+	}
 
 	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
 		List<LancamentoEstatisticaPorPessoa> dados = lancamentoRepository.porPessoa(inicio, fim);
