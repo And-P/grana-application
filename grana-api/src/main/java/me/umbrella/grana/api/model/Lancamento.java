@@ -132,7 +132,7 @@ public class Lancamento {
 
 	@JsonIgnore
 	public boolean isReceita() {
-		return TipoLancamento.RECEITA.equals(tipo);
+		return TipoLancamento.RECEITA.equals(this.tipo);
 	}
 
 	@Override

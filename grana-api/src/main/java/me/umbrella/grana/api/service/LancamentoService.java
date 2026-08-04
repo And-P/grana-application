@@ -3,6 +3,7 @@ package me.umbrella.grana.api.service;
 import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
 import me.umbrella.grana.api.mail.Mailer;
 import me.umbrella.grana.api.model.Usuario;
+import me.umbrella.grana.api.repository.UsuarioRepository;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -39,6 +40,9 @@ public class LancamentoService {
 	private PessoaRepository pessoaRepository;
 
 	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	@Autowired
 	private Mailer mailer;
 
 
@@ -49,7 +53,7 @@ public class LancamentoService {
 		if(LOGGER.isDebugEnabled()) LOGGER.debug("Emails Lançamentos Vencidos");
 
 		List<Lancamento> lancamentosVencidos = 	lancamentoRepository.findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
-		List<Usuario> destinatarios = lancamentoRepository.findByPermissoesDescricao(USUARIO_ROLE);
+		List<Usuario> destinatarios = usuarioRepository.findByPermissoesDescricao(USUARIO_ROLE);
 
 		if(lancamentosVencidos.isEmpty()) {
 			LOGGER.info("Não constam lançamentos vencidos.");

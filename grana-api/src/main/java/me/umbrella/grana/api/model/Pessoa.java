@@ -1,14 +1,12 @@
 package me.umbrella.grana.api.model;
 
+import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+
+
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,9 +30,11 @@ public class Pessoa {
 	@NotNull
 	private boolean ativo;
 
+	@Valid
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+	private List<Contato> contatos;
 	
 	//METHODS
-	
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -66,14 +66,21 @@ public class Pessoa {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-	
+
+	public List<Contato> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(List<Contato> contatos) {
+		this.contatos = contatos;
+	}
+
 	@JsonIgnore
 	@Transient
 	public boolean isInativo() {
 		return !this.ativo;
 	}
 	
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(ativo);
@@ -90,9 +97,5 @@ public class Pessoa {
 		Pessoa other = (Pessoa) obj;
 		return ativo == other.ativo;
 	}
-	
-	
-	
-	
-	
+
 }
