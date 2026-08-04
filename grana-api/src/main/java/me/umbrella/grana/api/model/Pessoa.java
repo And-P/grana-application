@@ -35,7 +35,8 @@ public class Pessoa {
 	@Valid
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
 	private List<Contato> contatos;
-	
+
+
 	//METHODS
 	public Long getCodigo() {
 		return codigo;
