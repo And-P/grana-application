@@ -32,7 +32,6 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
 	@PersistenceContext
 	private EntityManager manager;
-
 	@Override
 	public List<LancamentoEstatisticaPorPessoa> porPessoa(LocalDate inicio, LocalDate fim) {
 		CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();

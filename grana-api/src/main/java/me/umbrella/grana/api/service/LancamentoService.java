@@ -1,10 +1,14 @@
 package me.umbrella.grana.api.service;
 
 import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
+import me.umbrella.grana.api.mail.Mailer;
+import me.umbrella.grana.api.model.Usuario;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,16 +28,45 @@ import java.sql.Date;
 @Service
 public class LancamentoService {
 
+	private static final String USUARIO_ROLE = "ROLE_PESQUISAR_LANCAMENTO";
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(LancamentoService.class);
+
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
 
-	//@Scheduled(fixedDelay = 1000 * 2)
-	@Scheduled(cron="0 14 14 * * *")
+	@Autowired
+	private Mailer mailer;
+
+
+//	@Scheduled(cron="0 14 14 * * *")
+//	@Scheduled(fixedDelay = 1000 * 60 * 30)
 	public void alertaLancamentosVencidos() {
-		System.out.println("Scheduled");
+
+		if(LOGGER.isDebugEnabled()) LOGGER.debug("Emails Lançamentos Vencidos");
+
+		List<Lancamento> lancamentosVencidos = 	lancamentoRepository.findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
+		List<Usuario> destinatarios = lancamentoRepository.findByPermissoesDescricao(USUARIO_ROLE);
+
+		if(lancamentosVencidos.isEmpty()) {
+			LOGGER.info("Não constam lançamentos vencidos.");
+			return;
+		}
+
+		LOGGER.info("Existem {} Lançamentos Vencidos.", lancamentosVencidos.size());
+
+		if(destinatarios.isEmpty()) {
+			LOGGER.warn("Constam lançamentos vencidos sem destinatários.");
+			return;
+		}
+
+		mailer.alertaDeLancamentosVencidos(lancamentosVencidos, destinatarios);
+
+		LOGGER.info("Email de alerta concluído com sucesso");
+
 	}
 
 	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
