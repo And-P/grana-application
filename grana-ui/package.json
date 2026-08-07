@@ -26,6 +26,7 @@
     "@auth0/angular-jwt": "^5.2.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "chart.js": "^3.6.0",
     "font-awesome": "^4.7.0",
     "json-server": "^0.7.14",
     "primeflex": "^3.2.1",

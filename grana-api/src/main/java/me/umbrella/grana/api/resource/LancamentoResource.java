@@ -1,5 +1,9 @@
 package me.umbrella.grana.api.resource;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -8,8 +12,10 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import me.umbrella.grana.api.dto.Anexo;
 import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
 import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
+import me.umbrella.grana.api.storage.S3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
@@ -32,10 +38,13 @@ import me.umbrella.grana.api.repository.filter.LancamentoFilter;
 import me.umbrella.grana.api.repository.projection.LancamentoProjection;
 import me.umbrella.grana.api.service.LancamentoService;
 import me.umbrella.grana.api.service.exception.PessoaInexistenteOuInativaException;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/lancamentos")
 public class LancamentoResource {
+
+	private static final String DIR_ANEXO = "/home/and/Documentos/Cursos/AlgaWorks/Fullstack/grana-api/docs/anexos/";
 
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
@@ -49,6 +58,26 @@ public class LancamentoResource {
 	@Autowired
 	private MessageSource messageSource;
 
+	@Autowired
+	private S3 s3;
+
+
+	@PostMapping("/anexo")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and hasAuthority('SCOPE_write')")
+	public Anexo uploadAnexo(@RequestParam MultipartFile anexo)  throws IOException {
+
+		// Salva arquivo anexo em diretório local
+		/*try (OutputStream outputStream = new FileOutputStream(DIR_ANEXO + anexo.getOriginalFilename())) {
+			outputStream.write(anexo.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		// Salva arquivo anexo no Bucket S3
+		String nome = s3.salvarTemporariamente(anexo);
+
+		// new Anexo(nome, s3.configurarUrl(nome))
+		 return new Anexo(nome, s3.configuraURL(nome));
+	}
 
 	@GetMapping("/relatorio/por-pessoa")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")

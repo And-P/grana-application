@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { SegurancaModule } from './seguranca/seguranca.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 @NgModule({
@@ -22,8 +23,7 @@ import { PessoasModule } from './pessoas/pessoas.module';
     HttpClientModule,
 
     CoreModule,
-    LancamentosModule,
-    PessoasModule,
+    
     SegurancaModule,
     AppRoutingModule,
   ],

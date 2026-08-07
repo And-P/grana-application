@@ -6,7 +6,7 @@ import { PaginaNaoEncontradaComponent } from "./core/pagina-nao-encontrada.compo
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'lancamentos', pathMatch: 'full' }, 
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
   { path: '**', redirectTo: 'pagina-nao-encontrada' }

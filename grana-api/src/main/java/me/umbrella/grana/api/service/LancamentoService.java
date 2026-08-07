@@ -4,6 +4,7 @@ import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
 import me.umbrella.grana.api.mail.Mailer;
 import me.umbrella.grana.api.model.Usuario;
 import me.umbrella.grana.api.repository.UsuarioRepository;
+import me.umbrella.grana.api.storage.S3;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -20,6 +21,7 @@ import me.umbrella.grana.api.model.Pessoa;
 import me.umbrella.grana.api.repository.LancamentoRepository;
 import me.umbrella.grana.api.repository.PessoaRepository;
 import me.umbrella.grana.api.service.exception.PessoaInexistenteOuInativaException;
+import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -45,9 +47,12 @@ public class LancamentoService {
 	@Autowired
 	private Mailer mailer;
 
+	@Autowired
+	private S3 s3;
 
 //	@Scheduled(cron="0 14 14 * * *")
 //	@Scheduled(fixedDelay = 1000 * 60 * 30)
+
 	public void alertaLancamentosVencidos() {
 
 		if(LOGGER.isDebugEnabled()) LOGGER.debug("Emails Lançamentos Vencidos");
@@ -94,6 +99,10 @@ public class LancamentoService {
 		if (pessoa == null || pessoa.isInativo()) {
 			throw new PessoaInexistenteOuInativaException();
 		}
+
+		if (StringUtils.hasText(lancamento.getAnexo())) {
+			s3.salvar(lancamento.getAnexo());
+		}
 		
 		return lancamentoRepository.save(lancamento);
 	}
@@ -102,6 +111,12 @@ public class LancamentoService {
 		Lancamento lancamentoSalvo = buscarLancamentoExistente(codigo);
 		if (!lancamento.getPessoa().equals(lancamentoSalvo.getPessoa())) {
 			validarPessoa(lancamento);
+		}
+
+		if (!StringUtils.hasText(lancamento.getAnexo()) && StringUtils.hasText(lancamentoSalvo.getAnexo())) {
+			s3.remover(lancamentoSalvo.getAnexo());
+		} else if (StringUtils.hasText(lancamento.getAnexo()) && !lancamento.getAnexo().equals(lancamentoSalvo.getAnexo())) {
+			s3.substituir(lancamentoSalvo.getAnexo(), lancamento.getAnexo());
 		}
 
 		BeanUtils.copyProperties(lancamento, lancamentoSalvo, "codigo");

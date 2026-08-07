@@ -14,11 +14,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
+import { DashboardService } from '../dashboard/dashboard.service';
 import { AuthenticationService } from '../seguranca/auth.service';
 import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { LancamentosModule } from '../lancamentos/lancamentos.module';
+import { PessoasModule } from '../pessoas/pessoas.module';
+import { DashboardModule } from '../dashboard/dashboard.module';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -58,6 +62,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ErrorHandlerService,
     AuthenticationService,
 
+    LancamentosModule,
+    PessoasModule,
+    DashboardModule,
     MessageService,
     ConfirmationService,
     Title,

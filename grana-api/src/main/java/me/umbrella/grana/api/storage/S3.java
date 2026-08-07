@@ -1,0 +1,96 @@
+package me.umbrella.grana.api.storage;
+
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.UUID;
+
+import me.umbrella.grana.api.config.property.GranaApiProperty;
+
+@Component
+public class S3 {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(S3.class);
+
+    @Autowired
+    private GranaApiProperty property;
+
+    @Autowired
+    private AmazonS3 amazonS3;
+
+
+    public String salvarTemporariamente(MultipartFile arquivo) {
+//        AccessControlList acl = new AccessControlList();
+//                          acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+                       objectMetadata.setContentType(arquivo.getContentType());
+                       objectMetadata.setContentLength(arquivo.getSize());
+
+        String nomeUnico = gerarNomeUnico(arquivo.getOriginalFilename());
+
+        try {
+            PutObjectRequest putObjectRequest = new PutObjectRequest(
+                                                        property.getAwsS3().getBucket(),
+                                                        nomeUnico,
+                                                        arquivo.getInputStream(),
+                                                        objectMetadata);
+//                                                        .withAccessControlList(acl);
+
+                            putObjectRequest.setTagging(new ObjectTagging(Arrays.asList(new Tag("expirar", "true"))));
+
+            amazonS3.putObject(putObjectRequest);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Arquivo {} enviado com sucesso para o S3.", arquivo.getOriginalFilename());
+            }
+
+            return nomeUnico;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Problemas ao tentar enviar o arquivo para o S3.", e);
+        }
+    }
+
+    public String configuraURL(String objeto) {
+        return "\\\\" + property.getAwsS3().getBucket() + ".s3.amazonaws.com/" + objeto;
+    }
+
+    public void remover(String objeto) {
+        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(
+                property.getAwsS3().getBucket(), objeto);
+
+        amazonS3.deleteObject(deleteObjectRequest);
+    }
+
+    public void substituir(String objetoAntigo, String objetoNovo) {
+        if (StringUtils.hasText(objetoAntigo)) {
+            this.remover(objetoAntigo);
+        }
+
+        salvar(objetoNovo);
+    }
+
+    public void salvar(String anexo) {
+        SetObjectTaggingRequest setObjectTaggingRequest = new SetObjectTaggingRequest(property.getAwsS3().getBucket(),
+                                                                                      anexo,
+                                                                                      new ObjectTagging(Collections.emptyList()));
+        amazonS3.setObjectTagging(setObjectTaggingRequest);
+
+    }
+
+    private String gerarNomeUnico(String originalFilename) {
+        return UUID.randomUUID().toString() + "_" + originalFilename;
+    }
+}
