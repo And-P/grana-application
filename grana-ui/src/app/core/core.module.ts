@@ -40,6 +40,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CommonModule,
     RouterModule,
 
+    DashboardModule,
+    LancamentosModule,
+    PessoasModule,
+
     ToastModule,
     ConfirmDialogModule,
 
@@ -61,10 +65,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     DatePipe,
     ErrorHandlerService,
     AuthenticationService,
-
-    LancamentosModule,
-    PessoasModule,
-    DashboardModule,
+    
     MessageService,
     ConfirmationService,
     Title,

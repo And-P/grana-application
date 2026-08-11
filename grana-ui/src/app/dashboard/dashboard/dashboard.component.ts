@@ -36,6 +36,21 @@ export class DashboardComponent implements OnInit {
 
   constructor(private dashboardService: DashboardService) { }
 
+  configurarGraficoPizza() {
+    this.dashboardService.lancamentosPorCategoria()
+      .then(dados => {
+        this.pieChartData = {
+          labels: dados.map(dado => dado.categoria.nome),
+          datasets: [
+            {
+              data: dados.map(dado => dado.total),
+              backgroundColor: ['#FF9900', '#109618', '#990099', '#3B3EAC', '#DC3912']
+            }
+          ]
+        };
+      });
+  }
+
   ngOnInit(): void {
   }
 

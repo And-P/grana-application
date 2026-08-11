@@ -31,6 +31,7 @@ public class Pessoa {
 	@NotNull
 	private boolean ativo;
 
+
 	@JsonIgnoreProperties("pessoa")
 	@Valid
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
