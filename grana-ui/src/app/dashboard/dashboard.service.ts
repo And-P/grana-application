@@ -24,8 +24,9 @@ export class DashboardService {
       .toPromise()
       .then((response: any) => {
         const dados = response;
-        this.converterStringsParaDatas(dados);
 
+        this.converterStringsParaDatas(dados);
+        
         return dados;
       });
   }

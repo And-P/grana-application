@@ -94,7 +94,7 @@ public class LancamentoResource {
 	@GetMapping("/estatisticas/por-dia")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
 	public List<LancamentosEstatisticaPorDia> porDia() {
-		return this.lancamentoRepository.porDia(LocalDate.now().withMonth(1));
+		return this.lancamentoRepository.porDia(LocalDate.now().withYear(2026));
 	}
 
 	@GetMapping("/estatisticas/por-categoria")
