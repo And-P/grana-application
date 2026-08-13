@@ -23,6 +23,7 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
 import { LancamentosModule } from '../lancamentos/lancamentos.module';
 import { PessoasModule } from '../pessoas/pessoas.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { RelatoriosModule } from '../relatorios/relatorios.module';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -43,6 +44,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     DashboardModule,
     LancamentosModule,
     PessoasModule,
+    RelatoriosModule,
 
     ToastModule,
     ConfirmDialogModule,
@@ -66,9 +68,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ErrorHandlerService,
     AuthenticationService,
     
+    Title,
     MessageService,
     ConfirmationService,
-    Title,
     TranslateService,
   ]
 })
