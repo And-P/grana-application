@@ -17,13 +17,16 @@ import { ToastModule } from 'primeng/toast';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { AuthenticationService } from '../seguranca/auth.service';
 import { ErrorHandlerService } from './error-handler.service';
-import { NavbarComponent } from './navbar/navbar.component';
-import { NaoAutorizadoComponent } from './nao-autorizado.component';
-import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { RelatoriosService } from '../relatorios/relatorios.service';
+
 import { LancamentosModule } from '../lancamentos/lancamentos.module';
 import { PessoasModule } from '../pessoas/pessoas.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { RelatoriosModule } from '../relatorios/relatorios.module';
+
+import { NavbarComponent } from './navbar/navbar.component';
+import { NaoAutorizadoComponent } from './nao-autorizado.component';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -69,6 +72,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AuthenticationService,
     
     Title,
+    RelatoriosService,
     MessageService,
     ConfirmationService,
     TranslateService,
