@@ -1,21 +1,5 @@
 package me.umbrella.grana.api.resource;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import me.umbrella.grana.api.dto.Anexo;
-import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
-import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
-import me.umbrella.grana.api.storage.S3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
@@ -29,7 +13,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import me.umbrella.grana.api.dto.Anexo;
+import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
+import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
 import me.umbrella.grana.api.event.RecursoCriadoEvent;
 import me.umbrella.grana.api.exceptionhandler.GranaResponseEntityExceptionHandler.Erro;
 import me.umbrella.grana.api.model.Lancamento;
@@ -38,7 +34,7 @@ import me.umbrella.grana.api.repository.filter.LancamentoFilter;
 import me.umbrella.grana.api.repository.projection.LancamentoProjection;
 import me.umbrella.grana.api.service.LancamentoService;
 import me.umbrella.grana.api.service.exception.PessoaInexistenteOuInativaException;
-import org.springframework.web.multipart.MultipartFile;
+import me.umbrella.grana.api.storage.S3;
 
 @RestController
 @RequestMapping("/lancamentos")

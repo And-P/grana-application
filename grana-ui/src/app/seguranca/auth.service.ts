@@ -26,7 +26,6 @@ export class AuthenticationService {
   // Métodos
   public carregarToken() {
     const token = localStorage.getItem('token');
-    console.log('CarregarToken no jwtPayload => ', this.jwtPayload);
     if (token) {
       this.armazenarToken(token);
     }

@@ -1,5 +1,8 @@
-import { DashboardService } from './../dashboard.service';
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+
+import { DashboardService } from './../dashboard.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -35,7 +38,39 @@ lineChartData: any;
   // };
 
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService,
+              private decimalPipe: DecimalPipe) { }
+
+  optionsPie = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context: any): any => {
+            let label = context.label || '';
+            let value = context.raw || 0;
+            let formattedValue = this.decimalPipe.transform(value, '1.2-2', 'pt_BR');
+            return `${label}: ${formattedValue}`;
+          }
+        }
+      }
+    }
+  }
+
+  optionsLine = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context: any): any => {
+            let label = context.dataset.label || '';
+            let value = context.raw || 0;
+            let formattedValue = this.decimalPipe.transform(value, '1.2-2', 'pt_BR');
+            return `${label}: ${formattedValue}`;
+          }
+        }
+      }
+    }
+  }
+
 
   ngOnInit(): void {
     this.configurarGraficoPizza();
@@ -61,8 +96,6 @@ lineChartData: any;
     this.dashboardService.lancamentosPorDia()
       .then(dados => {
         
-        console.log("dados:", dados); 
-
         const diasDoMes = this.configurarDiasMes();
 
         const totaisReceitas = this.totaisPorCadaDiaMes(
@@ -91,8 +124,6 @@ lineChartData: any;
 
   private totaisPorCadaDiaMes(dados: any, diasDoMes: any) {
     const totais: number[] = [];
-
-     console.log("dados:", dados);  
 
     for (const dia of diasDoMes) {
       let total = 0;
@@ -127,7 +158,5 @@ lineChartData: any;
 
     return dias;
   }
-
-  
 
 }
