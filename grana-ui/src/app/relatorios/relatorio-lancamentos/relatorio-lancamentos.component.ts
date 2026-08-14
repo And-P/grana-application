@@ -21,8 +21,6 @@ export class RelatorioLancamentosComponent implements OnInit {
           const url = window.URL.createObjectURL(relatorio);
           window.open(url);
         }  
-
-        console.log('Erro ao gerar relatório', relatorio);
       });
   }
 
