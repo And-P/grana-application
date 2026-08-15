@@ -1,3 +1,4 @@
+import { Contato } from './contato.model';
 import { Endereco } from './endereco.model';
 
 export class Pessoa {
@@ -5,4 +6,5 @@ export class Pessoa {
   nome?: string;
   endereco = new Endereco();
   ativo: boolean = false;
+  contatos = new Array<Contato>();
 }  
