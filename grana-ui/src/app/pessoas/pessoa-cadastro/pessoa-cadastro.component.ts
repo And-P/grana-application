@@ -11,6 +11,7 @@ import { MessageService } from 'primeng/api';
 import { PessoasService } from '../pessoas-pesquisa/pessoas.service';
 import { Pessoa } from 'src/app/core/pessoa.model';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { Contato } from 'src/app/core/contato.model';
 
 @Component({
   selector: 'app-pessoa-cadastro',
@@ -69,6 +70,11 @@ export class PessoaCadastroComponent {
 
   pessoa = new Pessoa();
 
+  exbindoFormularioContato: boolean = false;
+
+  contato?: Contato;
+
+
   constructor( private pessoaService: PessoasService,
                private messageService: MessageService,
                private errorHandler: ErrorHandlerService,
@@ -78,6 +84,24 @@ export class PessoaCadastroComponent {
 
 
 
+
+  dialogFormNovoContato() {
+    this.exbindoFormularioContato = true;
+    this.contato = new Contato();
+  }
+
+
+  confirmarContato(form: NgForm) {
+    this.pessoa.contatos.push(this.clonarContato(this.contato!));
+    this.exbindoFormularioContato = false;
+    form.reset();
+  }
+
+  clonarContato(contato: Contato): Contato {
+    return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone);
+  }
+
+  
 
   salvar(form: NgForm) {
     if (this.editando) {
@@ -113,7 +137,6 @@ export class PessoaCadastroComponent {
     this.pessoaService.buscarPorCodigo(codigo)
                           .then( (pessoa: Pessoa) => {
                             this.pessoa = pessoa;
-                            console.log(pessoa);
                             this.atualizarTitulo();
                           })
                           .catch(error => this.errorHandler.handle(error));

@@ -1,5 +1,5 @@
-import { Contato } from './contato.model';
 import { Endereco } from './endereco.model';
+import { Contato } from './contato.model';
 
 export class Pessoa {
   codigo?: number;

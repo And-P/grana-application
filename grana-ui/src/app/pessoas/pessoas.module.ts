@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
@@ -27,12 +28,13 @@ import { PessoasService } from './pessoas-pesquisa/pessoas.service';
     FormsModule,
     RouterModule,
 
-    InputTextModule,
     ButtonModule,
-    TableModule,
-    TooltipModule,
+    DialogModule,
+    InputTextModule,
     InputMaskModule,
     PanelModule,
+    TableModule,
+    TooltipModule,
 
     SharedModule,
     PessoasRoutingModule,
