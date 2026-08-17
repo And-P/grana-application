@@ -70,11 +70,6 @@ export class PessoaCadastroComponent {
 
   pessoa = new Pessoa();
 
-  exbindoFormularioContato: boolean = false;
-
-  contato?: Contato;
-  contatoIndex?: number;
-
 
   constructor( private pessoaService: PessoasService,
                private messageService: MessageService,
@@ -84,40 +79,6 @@ export class PessoaCadastroComponent {
                private title: Title  ) { }
 
 
-
-    // Contato
-  dialogFormNovoContato() {
-    this.exbindoFormularioContato = true;
-    this.contato = new Contato();
-    this.contatoIndex = this.pessoa.contatos.length;
-  }
-
-  preEdicaoContato(contato: Contato, index: number)   {
-    this.contato = this.clonarContato(contato);
-    this.exbindoFormularioContato = true; 
-    this.contatoIndex = index;
-  }
-
-  confirmarContato(form: NgForm) {
-    // this.pessoa.contatos.push(this.clonarContato(this.contato!));
-    this.pessoa.contatos[this.contatoIndex!] = this.clonarContato(this.contato!);
-    this.exbindoFormularioContato = false;
-    form.reset();
-  }
-
-  removerContato(index: number) {
-    this.pessoa.contatos.splice(index, 1);
-    this.messageService.add({ severity: 'success', 
-                              detail: 'Contato removido com sucesso!' 
-                            });
-  }
-
-  private clonarContato(contato: Contato): Contato {
-    return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone);
-  }
-
-  
-  // Pessoa
   salvar(form: NgForm) {
     if (this.editando) {
       this.atualizarPessoa(form);

@@ -17,11 +17,13 @@ import { PessoasRoutingModule } from './pessoas-routing.module';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoasService } from './pessoas-pesquisa/pessoas.service';
+import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
 
 @NgModule({
   declarations: [
     PessoaCadastroComponent,
-    PessoasPesquisaComponent
+    PessoasPesquisaComponent,
+    PessoaCadastroContatoComponent
   ],
   imports: [
     CommonModule,
