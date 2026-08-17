@@ -21,7 +21,7 @@ public class Contato {
     @NotNull
     private String email;
 
-    @NotEmpty
+//    @NotEmpty
     private String telefone;
 
     @ManyToOne

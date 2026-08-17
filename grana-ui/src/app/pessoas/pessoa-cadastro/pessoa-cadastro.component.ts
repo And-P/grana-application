@@ -73,6 +73,7 @@ export class PessoaCadastroComponent {
   exbindoFormularioContato: boolean = false;
 
   contato?: Contato;
+  contatoIndex?: number;
 
 
   constructor( private pessoaService: PessoasService,
@@ -84,25 +85,39 @@ export class PessoaCadastroComponent {
 
 
 
-
+    // Contato
   dialogFormNovoContato() {
     this.exbindoFormularioContato = true;
     this.contato = new Contato();
+    this.contatoIndex = this.pessoa.contatos.length;
   }
 
+  preEdicaoContato(contato: Contato, index: number)   {
+    this.contato = this.clonarContato(contato);
+    this.exbindoFormularioContato = true; 
+    this.contatoIndex = index;
+  }
 
   confirmarContato(form: NgForm) {
-    this.pessoa.contatos.push(this.clonarContato(this.contato!));
+    // this.pessoa.contatos.push(this.clonarContato(this.contato!));
+    this.pessoa.contatos[this.contatoIndex!] = this.clonarContato(this.contato!);
     this.exbindoFormularioContato = false;
     form.reset();
   }
 
-  clonarContato(contato: Contato): Contato {
+  removerContato(index: number) {
+    this.pessoa.contatos.splice(index, 1);
+    this.messageService.add({ severity: 'success', 
+                              detail: 'Contato removido com sucesso!' 
+                            });
+  }
+
+  private clonarContato(contato: Contato): Contato {
     return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone);
   }
 
   
-
+  // Pessoa
   salvar(form: NgForm) {
     if (this.editando) {
       this.atualizarPessoa(form);
@@ -144,7 +159,6 @@ export class PessoaCadastroComponent {
 
 
   // Verifica se está editando ou cadastrando uma nova pessoa
-
   get editando() {
     return Boolean(this.pessoa.codigo);
   }

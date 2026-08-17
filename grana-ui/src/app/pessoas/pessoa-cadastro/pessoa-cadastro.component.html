@@ -179,7 +179,7 @@
                         </tr>
                       </ng-template>
 
-                      <ng-template pTemplate="body" let-contato>
+                      <ng-template pTemplate="body" let-contato let-rowIndex="rowIndex">
                         <tr>
                           <td>{{ contato.nome }}</td>
                           <td>{{ contato.email }}</td>
@@ -190,14 +190,17 @@
                                     type="button" 
                                     class="p-button-secondary" 
                                     pTooltip="Editar" 
-                                    tooltipPosition="top" size="small">
+                                    tooltipPosition="top" 
+                                    size="small"
+                                    (click)="preEdicaoContato(contato, rowIndex)">
                             </button>
                             <button pButton 
                                     icon="pi pi-trash" 
                                     type="button" 
                                     class="p-button-danger"
                                     pTooltip="Excluir"
-                                    tooltipPosition="top">
+                                    tooltipPosition="top"
+                                    (click)="removerContato( rowIndex)">
                             </button>
                           </td>
                         </tr>
