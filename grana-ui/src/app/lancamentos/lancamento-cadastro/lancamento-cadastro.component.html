@@ -74,6 +74,7 @@
                            
                 </div>
 
+
                 <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
                   <label>Valor</label>
                   <p-inputNumber 
@@ -119,6 +120,21 @@
                             formControlName="observacao"
                             >
                   </textarea>
+                </div>
+
+                <div class="lg:col-4 lg:col-offset-8 md:col-6 md:col-offset-6 sm:col-12 p-fluid">
+
+                  <p-fileUpload name="anexo" 
+                                mode="basic" 
+                                [style]="{'width':'100%'}" 
+                                [auto]="true" 
+                                [maxFileSize]="100000000"
+                                chooseLabel="Anexar" 
+                                accept="image/*,application/*" 
+                                [headers]="uploadHeaders" 
+                                [url]="urlUploadAnexo">
+                  </p-fileUpload>                  
+                  
                 </div>
 
             </div>    

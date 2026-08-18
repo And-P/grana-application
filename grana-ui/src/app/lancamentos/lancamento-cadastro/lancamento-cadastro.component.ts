@@ -1,4 +1,3 @@
-import { ComplementService } from '../lancamento-pesquisa/complement.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +11,7 @@ import { MessageService } from 'primeng/api';
 import { Lancamento } from 'src/app/core/lancamento.model';
 
 import { LancamentoService } from '../lancamento-pesquisa/lancamento.service';
+import { ComplementService } from '../lancamento-pesquisa/complement.service';
 import { PessoasService } from 'src/app/pessoas/pessoas-pesquisa/pessoas.service';
 
 import { MessageComponent } from '../../shared/message/message.component';
@@ -55,6 +55,15 @@ export class LancamentoCadastroComponent implements OnInit {
                private router: Router,
                private title: Title,
                private formBuilder: FormBuilder ) { }
+
+
+  get urlUploadAnexo() {
+    return this.lancamentoService.urlUploadAnexo();
+  }  
+
+  get uploadHeaders() {
+    return this.lancamentoService.uploadHeaders();
+  }
 
   get editando() {
     return Boolean(this.lancamentoForm.get('codigo')?.value);
@@ -139,24 +148,9 @@ export class LancamentoCadastroComponent implements OnInit {
     // `Edição de lançamento: ${this.formulario.get('descricao')?.value}`
   }
 
-  // OnInit
-  ngOnInit() {
 
-    this.configuraReactiveForm();
-    
-    const codigoLancamento = this.route.snapshot.params['codigo'];
 
-    this.title.setTitle('Cadastro de lançamento');
-
-    if (codigoLancamento && codigoLancamento !== 'cadastro') {
-      this.carregarLancamento(codigoLancamento);
-    }
-
-    this.buscarCategorias();
-    this.buscarPessoas();
-  }
-
-    configuraReactiveForm() {
+  configuraReactiveForm() {
     this.lancamentoForm = this.formBuilder.group({
       codigo: [],
       tipo: ['RECEITA', Validators.required],
@@ -184,6 +178,23 @@ export class LancamentoCadastroComponent implements OnInit {
     return (input: FormControl) => {
       return (!input.value || input.value.length >= valor) ? null : { tamanhoMinimo: { tamanho: valor } };
     };
+  }
+
+    // OnInit
+  ngOnInit() {
+
+    this.configuraReactiveForm();
+    
+    const codigoLancamento = this.route.snapshot.params['codigo'];
+
+    this.title.setTitle('Cadastro de lançamento');
+
+    if (codigoLancamento && codigoLancamento !== 'cadastro') {
+      this.carregarLancamento(codigoLancamento);
+    }
+
+    this.buscarCategorias();
+    this.buscarPessoas();
   }
 
 }

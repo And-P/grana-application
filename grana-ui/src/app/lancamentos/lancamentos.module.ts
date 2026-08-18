@@ -12,6 +12,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { FileUploadModule } from 'primeng/fileupload';
 
 import { SharedModule } from '../shared/shared.module';
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
@@ -29,15 +30,16 @@ import { ComplementService } from './lancamento-pesquisa/complement.service';
     HttpClientModule,
     ReactiveFormsModule,
 
+    ButtonModule,
+    CalendarModule,
+    DropdownModule,
+    FileUploadModule,
     InputNumberModule,
     InputTextModule,
-    ButtonModule,
+    InputTextareaModule,
+    SelectButtonModule,
     TableModule,
     TooltipModule,
-    InputTextareaModule,
-    CalendarModule,
-    SelectButtonModule,
-    DropdownModule,
 
     SharedModule,
     LancamentosRoutingModule

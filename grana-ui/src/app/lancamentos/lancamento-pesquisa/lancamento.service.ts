@@ -28,7 +28,17 @@ export class LancamentoService {
   
   constructor(private http: HttpClient) { 
     this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
-   }
+  }
+
+
+  urlUploadAnexo(): string {
+    return `${this.lancamentosUrl}/anexo`;
+  }
+
+  uploadHeaders() {
+    return new HttpHeaders()
+      .append('Authorization', 'Bearer ' + localStorage.getItem('token'))
+  } 
   
   
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
