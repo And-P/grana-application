@@ -122,7 +122,8 @@
                   </textarea>
                 </div>
 
-                <div class="lg:col-4 lg:col-offset-8 md:col-6 md:col-offset-6 sm:col-12 p-fluid">
+                <div class="lg:col-4 lg:col-offset-8 md:col-6 md:col-offset-6 sm:col-12 p-fluid"
+                     *ngIf="!lancamentoForm.get('anexo')?.value">
 
                   <p-fileUpload name="anexo" 
                                 mode="basic" 
@@ -132,10 +133,25 @@
                                 chooseLabel="Anexar" 
                                 accept="image/*,application/*" 
                                 [headers]="uploadHeaders" 
-                                [url]="urlUploadAnexo">
+                                [url]="urlUploadAnexo"
+                                (onUpload)="aoTerminarUploadAnexo($event)"
+                                (onError)="erroUpload($event)">
                   </p-fileUpload>                  
                   
                 </div>
+
+                <div class="col-12 p-fluid" 
+                     dir="rtl" 
+                     *ngIf="lancamentoForm.get('anexo')?.value">
+                  <a pTooltip="Baixar Anexo"
+                     target="_blank" 
+                     tooltipPosition="top" 
+                     [href]="lancamentoForm.get('urlAnexo')?.value">
+                    {{ nomeAnexo }}
+                  </a>
+                </div>
+
+
 
             </div>    
 

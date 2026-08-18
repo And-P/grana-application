@@ -47,6 +47,7 @@ export class LancamentoCadastroComponent implements OnInit {
   // lancamento = new Lancamento();
   lancamentoForm!: FormGroup;
 
+
   constructor( private complementService: ComplementService,
                private lancamentoService: LancamentoService,
                private messageService: MessageService,
@@ -55,6 +56,31 @@ export class LancamentoCadastroComponent implements OnInit {
                private router: Router,
                private title: Title,
                private formBuilder: FormBuilder ) { }
+
+
+
+  erroUpload(event: any) {
+    this.messageService.add({ severity: 'error', detail: 'Erro ao tentar enviar anexo!' });
+  }
+               
+  aoTerminarUploadAnexo(event: any) {
+    const anexo = event.originalEvent.body;
+    this.lancamentoForm.patchValue({
+      anexo: anexo.nome,
+      urlAnexo: anexo.url.replace('\\\\', 'https://')
+    });
+  }
+
+  get nomeAnexo() {
+    console.log('nomeAnexo')
+    const nome = this.lancamentoForm?.get('anexo')?.value;
+    console.log(nome)
+    if (nome) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+
+    return '';
+  }
 
 
   get urlUploadAnexo() {
@@ -150,24 +176,25 @@ export class LancamentoCadastroComponent implements OnInit {
 
 
 
-  configuraReactiveForm() {
-    this.lancamentoForm = this.formBuilder.group({
-      codigo: [],
-      tipo: ['RECEITA', Validators.required],
-      dataVencimento: [null, Validators.required],
-      dataPagamento: [],
-      descricao: [null, [ this.validadorCampoRequerido, this.validadorTamanhoMinimo(5) ]],
-      valor: [null, Validators.required],
-      pessoa: this.formBuilder.group({
-        codigo: [null, Validators.required],
-        nome: []
-      }),
-      categoria: this.formBuilder.group({
-        codigo: [null, Validators.required],
-        nome: []
-      }),
-      observacao: []
-    });
+  configuraReactiveForm() {   this.lancamentoForm = this.formBuilder.group({
+                              codigo: [],
+                              tipo: ['RECEITA', Validators.required],
+                              dataVencimento: [null, Validators.required],
+                              dataPagamento: [],
+                              descricao: [null, [ this.validadorCampoRequerido, this.validadorTamanhoMinimo(5) ]],
+                              valor: [null, Validators.required],
+                              pessoa: this.formBuilder.group({
+                                codigo: [null, Validators.required],
+                                nome: []
+                              }),
+                              categoria: this.formBuilder.group({
+                                codigo: [null, Validators.required],
+                                nome: []
+                              }),
+                              observacao: [],
+                              anexo: [],
+                              urlAnexo: []
+                            });
   }
 
   validadorCampoRequerido(input: FormControl) {
