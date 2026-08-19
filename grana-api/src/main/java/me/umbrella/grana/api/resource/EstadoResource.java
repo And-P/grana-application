@@ -1,0 +1,27 @@
+package me.umbrella.grana.api.resource;
+
+import me.umbrella.grana.api.model.Estado;
+import me.umbrella.grana.api.repository.EstadoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/estados")
+public class EstadoResource {
+
+    @Autowired
+    private EstadoRepository estadoRepository;
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
+    public List<Estado> listar () {
+        return estadoRepository.findAll();
+    }
+
+
+}
