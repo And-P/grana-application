@@ -135,14 +135,33 @@
                                 [headers]="uploadHeaders" 
                                 [url]="urlUploadAnexo"
                                 (onUpload)="aoTerminarUploadAnexo($event)"
-                                (onError)="erroUpload($event)">
+                                (onError)="erroUpload($event)"
+                                (onBeforeUpload)="beforeUploadAnexo()"
+                                [hidden]="uploadEmAndamento">
                   </p-fileUpload>                  
+
+                  <p-progressBar mode="indeterminate"
+                                 [hidden]="!uploadEmAndamento"
+                                 [style]="{width: '100%', height: '25px'}">
+
+                  </p-progressBar>
                   
+
                 </div>
 
                 <div class="col-12 p-fluid" 
                      dir="rtl" 
                      *ngIf="lancamentoForm.get('anexo')?.value">
+                  
+                  <button pButton 
+                          type="button" 
+                          class="p-button-danger" 
+                          icon="pi pi-times" 
+                          pTooltip="Remover Anexo"
+                          tooltipPosition="top" 
+                          (click)="removerAnexo()"
+                          [style]="{marginLeft: '15px'}">
+                  </button>
                   <a pTooltip="Baixar Anexo"
                      target="_blank" 
                      tooltipPosition="top" 
@@ -162,7 +181,7 @@
                         class="p-button-help" 
                         type="submit" 
                         label="Salvar" 
-                        [disabled]="lancamentoForm.invalid"></button>
+                        [disabled]="lancamentoForm.invalid || uploadEmAndamento"></button>
               </div>
               <div class="lg:col-2 md:col-2 sm:col-3 p-fluid">
                 <button pButton 

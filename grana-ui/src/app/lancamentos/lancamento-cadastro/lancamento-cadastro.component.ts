@@ -46,6 +46,7 @@ export class LancamentoCadastroComponent implements OnInit {
 
   // lancamento = new Lancamento();
   lancamentoForm!: FormGroup;
+  uploadEmAndamento: boolean = false;
 
 
   constructor( private complementService: ComplementService,
@@ -59,16 +60,29 @@ export class LancamentoCadastroComponent implements OnInit {
 
 
 
+  removerAnexo() {
+    this.lancamentoForm.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
+  }  
+
+  beforeUploadAnexo() {
+    this.uploadEmAndamento = true;
+  }
+
   erroUpload(event: any) {
     this.messageService.add({ severity: 'error', detail: 'Erro ao tentar enviar anexo!' });
+    this.uploadEmAndamento = false;
   }
-               
+                
   aoTerminarUploadAnexo(event: any) {
     const anexo = event.originalEvent.body;
     this.lancamentoForm.patchValue({
       anexo: anexo.nome,
-      urlAnexo: anexo.url.replace('\\\\', 'https://')
+      urlAnexo: anexo.url
     });
+    this.uploadEmAndamento = false;
   }
 
   get nomeAnexo() {
@@ -99,6 +113,12 @@ export class LancamentoCadastroComponent implements OnInit {
     this.lancamentoService.buscarPorCodigo(codigo)
                           .then(lancamento => {
                             this.lancamentoForm.patchValue(lancamento);
+
+                            if (this.lancamentoForm.get('urlAnexo')?.value)
+                                this.lancamentoForm.patchValue({
+                                  urlAnexo: this.lancamentoForm.get('urlAnexo')?.value.replace('\\\\', 'https://')
+                            });
+
                             this.atualizarTitulo();
                           })
                           .catch(error => this.errorHandlerService.handle(error));

@@ -13,6 +13,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { SharedModule } from '../shared/shared.module';
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
@@ -37,6 +38,7 @@ import { ComplementService } from './lancamento-pesquisa/complement.service';
     InputNumberModule,
     InputTextModule,
     InputTextareaModule,
+    ProgressSpinnerModule,
     SelectButtonModule,
     TableModule,
     TooltipModule,
