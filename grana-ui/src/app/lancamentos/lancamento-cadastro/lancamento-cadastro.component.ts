@@ -12,7 +12,7 @@ import { Lancamento } from 'src/app/core/lancamento.model';
 
 import { LancamentoService } from '../lancamento-pesquisa/lancamento.service';
 import { ComplementService } from '../lancamento-pesquisa/complement.service';
-import { PessoasService } from 'src/app/pessoas/pessoas-pesquisa/pessoas.service';
+import { PessoasService } from 'src/app/pessoas/pessoas.service';
 
 import { MessageComponent } from '../../shared/message/message.component';
 import { ErrorHandlerService } from './../../core/error-handler.service';

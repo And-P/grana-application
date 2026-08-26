@@ -8,6 +8,7 @@ import me.umbrella.grana.api.GranaApiApplication;
 import me.umbrella.grana.api.storage.S3;
 import me.umbrella.grana.api.model.Lancamento;
 
+
 public class AnexoEmLancamentoListener {
 
     @PostLoad
@@ -17,4 +18,5 @@ public class AnexoEmLancamentoListener {
             lancamento.setUrlAnexo(s3.configuraURL(lancamento.getAnexo()));
         }
     }
+
 }

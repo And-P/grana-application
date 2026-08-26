@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import me.umbrella.grana.api.dto.Anexo;
+import me.umbrella.grana.api.dto.AnexoS3;
 import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
 import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
 import me.umbrella.grana.api.event.RecursoCriadoEvent;
@@ -60,19 +60,19 @@ public class LancamentoResource {
 
 	@PostMapping("/anexo")
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and hasAuthority('SCOPE_write')")
-	public Anexo uploadAnexo(@RequestParam MultipartFile anexo)  throws IOException {
+	public AnexoS3 uploadAnexo(@RequestParam MultipartFile anexo)  throws IOException {
 
-		// Salva arquivo anexo em diretório local
+		// Salva arquivo anexo em Diretório Local
 		/*try (OutputStream outputStream = new FileOutputStream(DIR_ANEXO + anexo.getOriginalFilename())) {
 			outputStream.write(anexo.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}*/
+
 		// Salva arquivo anexo no Bucket S3
 		String nome = s3.salvarTemporariamente(anexo);
 
-		// new Anexo(nome, s3.configurarUrl(nome))
-		 return new Anexo(nome, s3.configuraURL(nome));
+		 return new AnexoS3(nome, s3.configuraURL(nome));
 	}
 
 	@GetMapping("/relatorio/por-pessoa")
@@ -142,7 +142,7 @@ public class LancamentoResource {
 	}
 
     @PutMapping("/{codigo}")
-    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO')")
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and hasAuthority('SCOPE_write')")
     public ResponseEntity<Lancamento> atualizar(@PathVariable Long codigo, @Valid @RequestBody Lancamento lancamento) {
         try {
             Lancamento lancamentoSalvo = lancamentoService.atualizar(codigo, lancamento);

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
@@ -16,7 +17,7 @@ import { PessoasRoutingModule } from './pessoas-routing.module';
 
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
-import { PessoasService } from './pessoas-pesquisa/pessoas.service';
+import { PessoasService } from './pessoas.service';
 import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
 
 @NgModule({
@@ -29,18 +30,18 @@ import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa
     CommonModule,
     FormsModule,
     RouterModule,
-
     ButtonModule,
     DialogModule,
+    DropdownModule,
     InputTextModule,
     InputMaskModule,
     PanelModule,
     TableModule,
     TooltipModule,
-
     SharedModule,
     PessoasRoutingModule,
-  ],
+    DropdownModule
+],
   providers: [
     PessoasService
   ],

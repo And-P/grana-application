@@ -70,7 +70,7 @@
 
                 </div>
 
-                <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
+                <div class="lg:col-12 md:col-12 sm:col-12 p-fluid">
                   <label>Complemento</label>
                   <input pInputText
                          name="complemento"
@@ -79,7 +79,7 @@
                          >
                 </div>
 
-                <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
+                <div class="lg:col-8 md:col-8 sm:col-12 p-fluid">
                   <label>Bairro</label>
                   <input pInputText
                          type="text"
@@ -117,43 +117,32 @@
 
                 </div>
 
-                <div class="lg:col-8 md:col-8 sm:col-12 p-fluid">
-                  <label>Cidade</label>
-                  <input pInputText
-                         type="text"
-                         name="cidade"
-                         [(ngModel)]="pessoa.endereco.cidade"
-                         #cidade="ngModel"
-                         [required]="true" 
-                         >
-
-                  <app-message
-                      [control]="cidade"
-                      error=""
-                      text="Cidade é obrigatória." 
-                      >
-                  </app-message>
-                </div>
+                
 
                 <div class="lg:col-4 md:col-4 sm:col-12 p-fluid">
                   <label>Estado</label>
-                  <input pInputText 
-                         type="text"
-                         name="estado"
-                         [(ngModel)]="pessoa.endereco.estado"
-                         #estado="ngModel"
-                         [required]="true" 
-                         >
-
-                  <app-message
-                      [control]="estado"
-                      error="required"
-                      text="Estado é obrigatório." 
-                    >
-                  </app-message>
+                  <p-dropdown 
+                      placeholder="Selecione"
+                      [filter]="true"
+                      [options]="estados" 
+                      [(ngModel)]="estadoSelecionado"
+                      name="estadoSelecionado"
+                      (onChange)="carregarCidades()">
+                  </p-dropdown>
                 </div>
 
-                
+                <div class="lg:col-8 md:col-8 sm:col-12 p-fluid">
+                  <label>Cidade</label>
+                  <p-dropdown 
+                      placeholder="Selecione"
+                      [filter]="true"
+                      [options]="cidades"
+                      [(ngModel)]="pessoa.endereco.cidade"
+                      name="cidade"
+                      #cidade="ngModel"
+                      >
+                  </p-dropdown>
+                </div>
             </div>    
 
             <div class="col-12">

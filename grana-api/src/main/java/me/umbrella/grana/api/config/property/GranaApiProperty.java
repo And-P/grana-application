@@ -12,25 +12,25 @@ public class GranaApiProperty {
 
 	private final Seguranca seguranca = new Seguranca();
 
-	private final AwsS3 awsS3 = new AwsS3();
-
 	private final Mail mail = new Mail();
 
+	private final AwsS3 awsS3 = new AwsS3();
 
-	public AwsS3 getAwsS3() {
-		return awsS3;
+
+	public String getOrigemPermitida() {
+		return origemPermitida;
+	}
+
+	public Seguranca getSeguranca() {
+		return seguranca;
 	}
 
 	public Mail getMail() {
 		return mail;
 	}
 
-	public Seguranca getSeguranca() {
-		return seguranca;
-	}
-	
-	public String getOrigemPermitida() {
-		return origemPermitida;
+	public AwsS3 getAwsS3() {
+		return awsS3;
 	}
 
 	public void setOrigemPermitida(String origemPermitida) {
@@ -46,10 +46,6 @@ public class GranaApiProperty {
 		private String bucket = "grana-api-arquivos";
 
 
-		public String getBucket() {
-			return bucket;
-		}
-
 		public String getAccessKeyId() {
 			return accessKeyId;
 		}
@@ -64,6 +60,11 @@ public class GranaApiProperty {
 
 		public void setSecretAccessKey(String secretAccessKey) {
 			this.secretAccessKey = secretAccessKey;
+		}
+
+
+		public String getBucket() {
+			return bucket;
 		}
 	}
 

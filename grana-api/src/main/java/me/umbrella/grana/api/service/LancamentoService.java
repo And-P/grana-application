@@ -52,7 +52,6 @@ public class LancamentoService {
 
 //	@Scheduled(cron="0 14 14 * * *")
 //	@Scheduled(fixedDelay = 1000 * 60 * 30)
-
 	public void alertaLancamentosVencidos() {
 
 		if(LOGGER.isDebugEnabled()) LOGGER.debug("Emails Lançamentos Vencidos");
@@ -95,10 +94,7 @@ public class LancamentoService {
 	}
 
 	public Lancamento salvar(Lancamento lancamento) {
-		Pessoa pessoa = pessoaRepository.getReferenceById(lancamento.getPessoa().getCodigo());
-		if (pessoa == null || pessoa.isInativo()) {
-			throw new PessoaInexistenteOuInativaException();
-		}
+		validarPessoa(lancamento);
 
 		if (StringUtils.hasText(lancamento.getAnexo())) {
 			s3.salvar(lancamento.getAnexo());
@@ -108,7 +104,9 @@ public class LancamentoService {
 	}
 
 	public Lancamento atualizar(Long codigo, Lancamento lancamento) {
+
 		Lancamento lancamentoSalvo = buscarLancamentoExistente(codigo);
+
 		if (!lancamento.getPessoa().equals(lancamentoSalvo.getPessoa())) {
 			validarPessoa(lancamento);
 		}

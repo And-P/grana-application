@@ -31,8 +31,8 @@ public class S3 {
 
 
     public String salvarTemporariamente(MultipartFile arquivo) {
-//        AccessControlList acl = new AccessControlList();
-//                          acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
+        /*AccessControlList acl = new AccessControlList();
+                          acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);*/
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
                        objectMetadata.setContentType(arquivo.getContentType());
@@ -46,14 +46,14 @@ public class S3 {
                                                         nomeUnico,
                                                         arquivo.getInputStream(),
                                                         objectMetadata);
-//                                                        .withAccessControlList(acl);
+                                                        /*.withAccessControlList(acl);*/
 
                             putObjectRequest.setTagging(new ObjectTagging(Arrays.asList(new Tag("expirar", "true"))));
 
             amazonS3.putObject(putObjectRequest);
 
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Arquivo {} enviado com sucesso para o S3.", arquivo.getOriginalFilename());
+                LOGGER.info("Arquivo {} enviado com sucesso para o S3.", arquivo.getOriginalFilename());
             }
 
             return nomeUnico;
@@ -63,13 +63,10 @@ public class S3 {
         }
     }
 
-    public String configuraURL(String objeto) {
-        return "\\\\" + property.getAwsS3().getBucket() + ".s3.amazonaws.com/" + objeto;
-    }
+
 
     public void remover(String objeto) {
-        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(
-                property.getAwsS3().getBucket(), objeto);
+        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(property.getAwsS3().getBucket(), objeto);
 
         amazonS3.deleteObject(deleteObjectRequest);
     }
@@ -82,12 +79,18 @@ public class S3 {
         salvar(objetoNovo);
     }
 
-    public void salvar(String anexo) {
-        SetObjectTaggingRequest setObjectTaggingRequest = new SetObjectTaggingRequest(property.getAwsS3().getBucket(),
-                                                                                      anexo,
-                                                                                      new ObjectTagging(Collections.emptyList()));
-        amazonS3.setObjectTagging(setObjectTaggingRequest);
+    public void salvar(String objeto) {
+        SetObjectTaggingRequest setObjectTaggingRequest =
+                new SetObjectTaggingRequest(property.getAwsS3().getBucket(),
+                                            objeto,
+                                        new ObjectTagging(Collections.emptyList()));
 
+        amazonS3.setObjectTagging(setObjectTaggingRequest);
+    }
+
+
+    public String configuraURL(String objeto) {
+        return "\\\\" + property.getAwsS3().getBucket() + ".s3.amazonaws.com/" + objeto;
     }
 
     private String gerarNomeUnico(String originalFilename) {

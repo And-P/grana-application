@@ -34,7 +34,6 @@ public class AwsS3Config {
 
         // Cria o Bucket S3 via código. (sem esse codigo teriamos que já ter o Bucket criado na S3)
         if (!amazonS3.doesBucketExistV2(property.getAwsS3().getBucket())) {
-
             amazonS3.createBucket(new CreateBucketRequest(property.getAwsS3().getBucket()));
 
             BucketLifecycleConfiguration.Rule regraDeExpiracao = new BucketLifecycleConfiguration
@@ -51,6 +50,4 @@ public class AwsS3Config {
 
         return amazonS3;
     }
-
-
 }
