@@ -58,11 +58,15 @@ public class Endereco {
         this.cep = cep;
     }
 
+    public void setCep(Cidade cidade) {
+        this.cidade = cidade;
+    }
+
     public Cidade getCidade() {
         return cidade;
     }
 
-    public void setCep(Cidade cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
 

@@ -32,7 +32,6 @@ export class PessoasService {
     
   
   pesquisar(filtro: PessoaFiltro): Promise<any> {
-  
       let params = new HttpParams()
                           .set('page', filtro.pagina.toString())
                           .set('size', filtro.itensPorPagina.toString())
@@ -54,21 +53,18 @@ export class PessoasService {
 
   
   adicionar(pessoa: any): Promise<Pessoa> {
-                
       return this.http.post<Pessoa>(`${this.pessoasUrl}`, pessoa)
               .toPromise()
               .then((response: any) => response);
   } 
 
   atualizar(pessoa: Pessoa): Promise<Pessoa> {
-
       return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa)
                       .toPromise()
                       .then((response: any) => response);
   }
 
   buscarPorCodigo(codigo: number): Promise<Pessoa> {
-
       return this.http.get(`${this.pessoasUrl}/${codigo}`)
                       .toPromise()
                       .then((response: any) => {
@@ -78,30 +74,28 @@ export class PessoasService {
   } 
 
   excluir(codigo: number): Promise<void | null> {
-      
       return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`)
                       .toPromise();
   }
   
   mudarStatus(codigo: number, status: boolean): Promise<void> {
-
       return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status)
                       .toPromise();
   }
 
 
-
-
-  // Método para listar todos os estados
+  // Método para listar os estados
   listarEstados(): Promise<Estado[]> {
-      return this.http.get<any>(this.estadosUrl).toPromise();
+      return this.http.get<any>(this.estadosUrl).toPromise()
+                                                .then(response => response);
   }
 
   // Método para pesquisar cidades com base no código do estado
-  pesquisarCidades(codigo_estado: number): Promise<Cidade[]> {
-      const params = new HttpParams().set('codigo_estado', codigo_estado);
+  pesquisarCidades(estado: number): Promise<Cidade[]> {
+      const params = new HttpParams().set('estado', estado);
   
-      return this.http.get<any>(this.cidadesUrl, { params }).toPromise();
+      return this.http.get<any>(this.cidadesUrl, { params }).toPromise()
+                                                            .then(response => response);
   }
 
 }

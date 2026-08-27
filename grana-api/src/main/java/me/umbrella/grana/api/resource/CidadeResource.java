@@ -15,14 +15,14 @@ public class CidadeResource {
     @Autowired
     private CidadeRepository cidadeRepository;
 
-    @GetMapping
-    public List<Cidade> listar() {
+//    @GetMapping
+    /*public List<Cidade> listar() {
         return cidadeRepository.findAll();
-    }
+    }*/
 
-    @GetMapping( "/{codigo_estado}")
-    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
-    public List<Cidade> pesquisar(@PathVariable Long codigo_estado) {
-        return cidadeRepository.findByEstadoCodigo(codigo_estado);
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    public List<Cidade> pesquisar(@RequestParam Long estado) {
+        return cidadeRepository.findByEstadoCodigo(estado);
     }
 }

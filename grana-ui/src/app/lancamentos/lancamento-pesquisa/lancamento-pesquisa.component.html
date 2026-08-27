@@ -89,12 +89,13 @@
                       <span class="p-column-title">Valor</span>
                       <span [ngStyle]="{ color: lancamento.tipo === 'DESPESA' ? 'red' : 'gray'}">{{lancamento.valor | number:'1.2-2':'pt-BR'}}</span>
                     </td>
-                    <td class="col-acoes-content">
+                    <td class="col-acoes">
                       <a pButton 
                          class="p-button-secondary" 
                          pTooltip="Editar" 
                          tooltipPosition="top"
                          icon="pi pi-pencil" 
+                         style="margin-right: 5px"
                          [routerLink]="['/lancamentos', lancamento.codigo]"
                          >
                       </a>

@@ -71,6 +71,7 @@ public class Pessoa {
 		this.ativo = ativo;
 	}
 
+
 	public List<Contato> getContatos() {
 		return contatos;
 	}

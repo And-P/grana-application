@@ -18,7 +18,7 @@ public class EstadoResource {
     private EstadoRepository estadoRepository;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
+    @PreAuthorize("isAuthenticated()")
     public List<Estado> listar () {
         return estadoRepository.findAll();
     }

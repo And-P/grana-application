@@ -58,7 +58,7 @@ export class PessoaCadastroComponent {
   //   { label: 'Venezuela', value: 8 }
   // ];  
 
-  estadoSelecionado: number = 2;
+  estadoSelecionado?: number;
 
   pessoa = new Pessoa();
 
@@ -103,11 +103,18 @@ export class PessoaCadastroComponent {
 
   carregarPessoa(codigo: number) {
     this.pessoaService.buscarPorCodigo(codigo)
-                          .then( (pessoa: Pessoa) => {
-                            this.pessoa = pessoa;
-                            this.atualizarTitulo();
-                          })
-                          .catch(error => this.errorHandler.handle(error));
+                      .then( (pessoa: Pessoa) => {
+                        this.pessoa = pessoa;
+
+                        this.estadoSelecionado = (this.pessoa.endereco.cidade) ? this.pessoa.endereco.cidade.estado.codigo : undefined;
+
+                        if (this.estadoSelecionado) {
+                          this.carregarCidades();
+                        }
+
+                        this.atualizarTitulo();
+                      })
+                      .catch(error => this.errorHandler.handle(error));
   }
 
 
@@ -135,19 +142,23 @@ export class PessoaCadastroComponent {
     this.pessoaService.listarEstados()
                       .then( (estados: any) => {
                           
-                        this.estados = estados.map((estado: any) => { return { label: estado.nome, value: estado.codigo } });
+                        this.estados = estados.map((estado: any) => ({ label: estado.nome, value: estado.codigo }));
                           
                       }).catch(erro => this.errorHandler.handle(erro));
 
   }  
 
   carregarCidades() {
-    this.pessoaService.pesquisarCidades(this.estadoSelecionado)
+    this.pessoaService.pesquisarCidades(this.estadoSelecionado!)
                       .then( (cidades: any) => {
                           
                         this.cidades = cidades.map((cidade: any) => { return { label: cidade.nome, value: cidade.codigo } });
+
+                        if (this.estadoSelecionado !== this.pessoa.endereco.cidade.estado.codigo){
+                          this.pessoa.endereco.cidade.codigo = 0;
+                        }
                           
-                      }).catch(erro => this.errorHandler.handle(erro)); 
+                    }).catch(erro => this.errorHandler.handle(erro)); 
   }
 
 
