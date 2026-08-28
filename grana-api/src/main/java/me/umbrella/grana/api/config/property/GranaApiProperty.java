@@ -3,6 +3,8 @@ package me.umbrella.grana.api.config.property;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 @Component
 @ConfigurationProperties("grana-api-property")
@@ -69,6 +71,7 @@ public class GranaApiProperty {
 	}
 
 	// CLASS
+/*
 	public static class Seguranca {
 		
 		private boolean enableHttps;
@@ -80,7 +83,29 @@ public class GranaApiProperty {
 		public void setEnableHttps(boolean enableHttps) {
 			this.enableHttps = enableHttps;
 		}
-	
+	}
+*/
+
+	public static class Seguranca {
+
+		private List<String> redirectsPermitidos;
+		private String authServerUrl;
+
+		public List<String> getRedirectsPermitidos() {
+			return redirectsPermitidos;
+		}
+
+		public void setRedirectsPermitidos(List<String> redirectsPermitidos) {
+			this.redirectsPermitidos = redirectsPermitidos;
+		}
+
+		public String getAuthServerUrl() {
+			return authServerUrl;
+		}
+
+		public void setAuthServerUrl(String authServerUrl) {
+			this.authServerUrl = authServerUrl;
+		}
 	}
 
 	// CLASS
