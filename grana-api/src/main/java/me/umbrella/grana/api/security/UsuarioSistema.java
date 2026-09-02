@@ -9,6 +9,7 @@ import me.umbrella.grana.api.model.Usuario;
 
 
 public class UsuarioSistema extends User {
+
     private static final long serialVersionUID = 1L;
 
     private Usuario usuario;

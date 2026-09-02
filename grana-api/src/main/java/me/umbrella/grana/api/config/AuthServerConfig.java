@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,6 +38,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import me.umbrella.grana.api.config.property.GranaApiProperty;
 
+import java.io.File;
+import java.io.InputStream;
+import java.security.KeyStore;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -59,7 +63,7 @@ public class AuthServerConfig {
         RegisteredClient angularClient =
                             RegisteredClient.withId(UUID.randomUUID().toString())
                                             .clientId("angular")
-                                            .clientSecret(passwordEncoder.encode("@ngul@r0"))
+                                            .clientSecret(passwordEncoder.encode("@ngul@r"))
                                             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                                             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                                             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -127,13 +131,21 @@ public class AuthServerConfig {
     }
 
     @Bean
-    public JWKSet jwkSet() throws JOSEException {
-        RSAKey rsa = new RSAKeyGenerator(2048)
+    public JWKSet jwkSet() throws Exception {
+
+        final InputStream inputStream = new ClassPathResource("keystore/grana-application.jks").getInputStream();
+
+        final KeyStore keyStore = KeyStore.getInstance("JKS");
+                       keyStore.load(inputStream, "123456".toCharArray());
+
+        RSAKey rsaKey = RSAKey.load( keyStore, "grana-app", "123456".toCharArray());
+
+                /*RSAKey rsa = new RSAKeyGenerator(2048)
                 .keyUse(KeyUse.SIGNATURE)
                 .keyID(UUID.randomUUID().toString())
-                .generate();
+                .generate();*/
 
-        return new JWKSet(rsa);
+        return new JWKSet(rsaKey);
     }
 
     @Bean
