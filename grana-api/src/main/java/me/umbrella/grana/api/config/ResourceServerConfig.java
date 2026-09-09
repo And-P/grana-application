@@ -1,37 +1,34 @@
 package me.umbrella.grana.api.config;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.crypto.spec.SecretKeySpec;
-
-import com.nimbusds.jose.jwk.source.JWKSource;
-import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.util.StringUtils;
+
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import me.umbrella.grana.api.config.property.GranaApiProperty;
 
 @Profile("oauth-security")
 @Configuration
@@ -42,16 +39,34 @@ public class ResourceServerConfig {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+    @Autowired
+    private GranaApiProperty   granaApiProperty;
 
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/categorias").permitAll()
+                .antMatchers("/categorias", "/.well-known/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
+        http.logout(
+                logoutConfig -> {
+                    logoutConfig.logoutSuccessHandler(
+                            (httpServletRequest, httpServletResponse, authentication) -> {
+                                String returnTo = httpServletRequest.getParameter("returnTo");
+
+                                if (!StringUtils.hasText(returnTo)) {
+                                    returnTo = granaApiProperty.getSeguranca().getAuthServerUrl();
+                                }
+
+                                httpServletResponse.setStatus(302);
+                                httpServletResponse.sendRedirect(returnTo);
+                            }
+                    );
+                }
+        );
         return http.formLogin(Customizer.withDefaults()).build();
     }
     

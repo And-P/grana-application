@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginFormComponent } from './login-form/login-form.component';
+import { AuthorizedComponent } from './authorized/authorized.component';
 
 
-const routes: Routes = [
-  { path: 'login', component: LoginFormComponent }
-];
+const routes: Routes = [ { path: 'authorized', component: AuthorizedComponent }];
 
 @NgModule({
   imports: [

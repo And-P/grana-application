@@ -15,7 +15,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
 import { DashboardService } from '../dashboard/dashboard.service';
-import { AuthenticationService } from '../seguranca/auth.service';
+import { AuthenticationService } from '../seguranca/authentication.service';
 import { ErrorHandlerService } from './error-handler.service';
 import { RelatoriosService } from '../relatorios/relatorios.service';
 

@@ -1,14 +1,10 @@
 package me.umbrella.grana.api.config;
 
-import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.RSAKey;
-import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import me.umbrella.grana.api.security.UsuarioSistema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,9 +32,6 @@ import org.springframework.security.oauth2.server.authorization.config.ProviderS
 import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
 import org.springframework.security.web.SecurityFilterChain;
 
-import me.umbrella.grana.api.config.property.GranaApiProperty;
-
-import java.io.File;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.time.Duration;
@@ -46,6 +39,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+
+import me.umbrella.grana.api.config.property.GranaApiProperty;
+import me.umbrella.grana.api.security.UsuarioSistema;
+
 
 @Configuration
 @Profile("oauth-security")
@@ -71,13 +68,12 @@ public class AuthServerConfig {
                                             .scope("read")
                                             .scope("write")
                                             .tokenSettings(TokenSettings.builder()
-                                                                        .accessTokenTimeToLive(Duration.ofMinutes(30))
-                                                                        .refreshTokenTimeToLive(Duration.ofDays(24))
-                                                                        .build())
-                                         .clientSettings(ClientSettings.builder()
-                                                                       .requireAuthorizationConsent(true)
-                                                                       .build())
-                                         .build();
+                                                           .accessTokenTimeToLive(Duration.ofMinutes(30))
+                                                           .refreshTokenTimeToLive(Duration.ofDays(24))
+                                                           .build())
+                                                                   .clientSettings(ClientSettings.builder()
+                                                                   //.requireAuthorizationConsent(true)
+                                                                   .build()).build();
 
         RegisteredClient mobileClient =
                             RegisteredClient.withId(UUID.randomUUID().toString())

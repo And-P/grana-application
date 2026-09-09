@@ -25,20 +25,16 @@ public class AppUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		
 		Optional<Usuario> usuOptional = usuarioRepository.findByEmail(email);
 		Usuario usuario = usuOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
 		return new UsuarioSistema(usuario, getPermissoes(usuario));
 	}
 	
 	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {
-		
 		Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 		usuario.getPermissoes().forEach( permUsu -> authorities.add(new SimpleGrantedAuthority(permUsu.getDescricao().toUpperCase())));
 		return authorities;
-
 	}
-
 }
 
 

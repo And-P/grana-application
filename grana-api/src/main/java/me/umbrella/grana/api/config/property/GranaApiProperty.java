@@ -10,7 +10,7 @@ import java.util.List;
 @ConfigurationProperties("grana-api-property")
 public class GranaApiProperty {
 
-	private String origemPermitida = "http://localhost:8000";
+	private String origemPermitida = "http://grana-application.umbrella.com:8000";
 
 	private final Seguranca seguranca = new Seguranca();
 
@@ -40,7 +40,7 @@ public class GranaApiProperty {
 	}
 
 
-	// CLASS
+	// CLASSES
 	public static class AwsS3 {
 
 		private String accessKeyId;
@@ -70,7 +70,6 @@ public class GranaApiProperty {
 		}
 	}
 
-	// CLASS
 /*
 	public static class Seguranca {
 		
@@ -108,7 +107,6 @@ public class GranaApiProperty {
 		}
 	}
 
-	// CLASS
 	public static class Mail {
 
 		private String host;

@@ -16,16 +16,12 @@ export class AppComponent {
                private router: Router
   ) {}
 
-  exibirNavbar() {
-    return this.router.url !== '/login';
-  }
 
   ngOnInit() {
       this.primengConfig.ripple = true;
 
       this.translateService.setDefaultLang('pt');
-      this.translateService.get('primeng')
-                           .subscribe(res => this.primengConfig.setTranslation(res));
+      this.translateService.get('primeng').subscribe(res => this.primengConfig.setTranslation(res));
   }
 
 }

@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 
 import { PessoasService, PessoaFiltro } from '../pessoas.service';
 import { ErrorHandlerService } from './../../core/error-handler.service';
-import { AuthenticationService } from 'src/app/seguranca/auth.service';
+import { AuthenticationService } from 'src/app/seguranca/authentication.service';
 
 
 @Component({
