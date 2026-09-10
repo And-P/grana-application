@@ -38,21 +38,6 @@ The domain is **Personal Financial Management (Financial Control)**:
 </div>
 
 <br /> 
-
-<p>http://grana-application.umbrella.com
-  <select>
-    <option value="/lancamentos">/lancamentos</option>
-    <option value="/pessoas">/pessoas</option>
-    <option value="/categorias">/categorias</option>
-    <option value="pessoas/nome">/pessoas?nome=...</option>
-    <option value="pessoas/codigo">/pessoas/{codigo}</option>
-    <option value="pessoas/codigo/ativo">/pessoas/{codigo}/ativo</option>
-    <option value="lancamentos resumo">/lancamentos?resumo=true</option>
-    <option value="...">...</option>
-  </select>
-</p>
-
-<br /> 
 <hr />
 
 #### Technologies
