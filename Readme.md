@@ -6,7 +6,6 @@
 
 <br/>
 <br/>
-<hr />
 
 #### UML Class Diagram
 <div align="center">
