@@ -34,8 +34,6 @@ export class LancamentoCadastroComponent implements OnInit {
   // pessoas = [
   //   { label: 'João Gilberto', value: 1 },
   //   { label: 'Maria Bethânia', value: 2 },
-  //   { label: 'Francisco Buarque', value: 3 },
-  //   { label: 'Milton Nascimento', value: 4 },
   // ];
   pessoas: any[] = [];
 

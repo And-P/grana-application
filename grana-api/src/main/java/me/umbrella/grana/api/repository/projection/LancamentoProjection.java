@@ -1,13 +1,11 @@
 package me.umbrella.grana.api.repository.projection;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import me.umbrella.grana.api.model.TipoLancamento;
 
 //RESUMO DE DADOS DE UM LANÇAMENTO
-
 public class LancamentoProjection {
 	    
 		private Long codigo;

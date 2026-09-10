@@ -1,32 +1,33 @@
 package me.umbrella.grana.api.service;
 
-import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
-import me.umbrella.grana.api.mail.Mailer;
-import me.umbrella.grana.api.model.Usuario;
-import me.umbrella.grana.api.repository.UsuarioRepository;
-import me.umbrella.grana.api.storage.S3;
+import org.springframework.beans.BeanUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-
-import me.umbrella.grana.api.model.Lancamento;
-import me.umbrella.grana.api.model.Pessoa;
-import me.umbrella.grana.api.repository.LancamentoRepository;
-import me.umbrella.grana.api.repository.PessoaRepository;
-import me.umbrella.grana.api.service.exception.PessoaInexistenteOuInativaException;
-import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.*;
 import java.sql.Date;
+
+import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
+import me.umbrella.grana.api.mail.Mailer;
+import me.umbrella.grana.api.model.Usuario;
+import me.umbrella.grana.api.repository.UsuarioRepository;
+import me.umbrella.grana.api.storage.S3;
+import me.umbrella.grana.api.model.Lancamento;
+import me.umbrella.grana.api.model.Pessoa;
+import me.umbrella.grana.api.repository.LancamentoRepository;
+import me.umbrella.grana.api.repository.PessoaRepository;
+import me.umbrella.grana.api.service.exception.PessoaInexistenteOuInativaException;
+
 
 @Service
 public class LancamentoService {

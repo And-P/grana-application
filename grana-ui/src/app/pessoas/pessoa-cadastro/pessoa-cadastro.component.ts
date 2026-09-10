@@ -11,7 +11,6 @@ import { MessageService } from 'primeng/api';
 import { PessoasService } from '../pessoas.service';
 import { Pessoa } from 'src/app/core/pessoa.model';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { Contato } from 'src/app/core/contato.model';
 
 @Component({
   selector: 'app-pessoa-cadastro',

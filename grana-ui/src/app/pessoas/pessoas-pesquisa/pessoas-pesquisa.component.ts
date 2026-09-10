@@ -18,17 +18,8 @@ export class PessoasPesquisaComponent {
   // pessoas = [
   //   { nome: 'André Rei', cidade: 'São Paulo', estado: 'SP', status: true},
   //   { nome: 'Marcela Camilo', cidade: 'São Paulo', estado: 'SP', status: false},
-  //   { nome: 'Joana Benedeti', cidade: 'Niterói', estado: 'RJ', status: true},
-  //   { nome: 'Andreia Rabelo', cidade: 'Recife', estado: 'PE', status: true},
-  //   { nome: 'Camila Ribeiro', cidade: 'São Paulo', estado: 'SP', status: false},
-  //   { nome: 'Adriana Gonsalvez', cidade: 'Recife', estado: 'PE', status: true},
-  //   { nome: 'Marcia Gomes', cidade: 'Belo Horizonte', estado: 'MG', status: true},
-  //   { nome: 'Fernanda Broma', cidade: 'São Paulo', estado: 'SP', status: false},
-  //   { nome: 'Isis Scamparini', cidade: 'Belo Horizonte', estado: 'MG', status: true},
-  //   { nome: 'Thais Goes', cidade: 'Niterói', estado: 'RJ', status: true}
   // ];
 
-  // pessoas = [];
   pessoas: any[] = [];
   
   totalRegistros = 0;

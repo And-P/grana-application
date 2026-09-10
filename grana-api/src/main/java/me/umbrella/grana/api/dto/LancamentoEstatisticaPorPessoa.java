@@ -1,9 +1,10 @@
 package me.umbrella.grana.api.dto;
 
+import java.math.BigDecimal;
+
 import me.umbrella.grana.api.model.Pessoa;
 import me.umbrella.grana.api.model.TipoLancamento;
 
-import java.math.BigDecimal;
 
 public class LancamentoEstatisticaPorPessoa {
 

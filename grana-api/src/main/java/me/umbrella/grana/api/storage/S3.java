@@ -1,15 +1,15 @@
 package me.umbrella.grana.api.storage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import me.umbrella.grana.api.config.property.GranaApiProperty;
+
 
 @Component
 public class S3 {
@@ -87,7 +88,6 @@ public class S3 {
 
         amazonS3.setObjectTagging(setObjectTaggingRequest);
     }
-
 
     public String configuraURL(String objeto) {
         return "\\\\" + property.getAwsS3().getBucket() + ".s3.amazonaws.com/" + objeto;

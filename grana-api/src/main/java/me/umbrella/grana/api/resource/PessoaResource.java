@@ -1,11 +1,5 @@
 package me.umbrella.grana.api.resource;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -15,10 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import me.umbrella.grana.api.event.RecursoCriadoEvent;
 import me.umbrella.grana.api.model.Pessoa;
 import me.umbrella.grana.api.repository.PessoaRepository;
 import me.umbrella.grana.api.service.PessoaService;
+
 
 @RestController
 @RequestMapping("/pessoas")
@@ -40,13 +39,6 @@ public class PessoaResource {
 		return pessoaRepository.findByNomeContaining(nome, pageable);
 	}
 
-	/*@GetMapping
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')" )
-	public List<Pessoa> listar() {
-		return pessoaRepository.findAll();
-	}*/
-	
-	
 	@PostMapping
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response) {
@@ -57,7 +49,6 @@ public class PessoaResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
 	}
 	
-	
 	@GetMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
 	public ResponseEntity<Pessoa> buscaPeloCodigo(@PathVariable Long codigo) {
@@ -66,7 +57,6 @@ public class PessoaResource {
 		return pessoa.isPresent() ? ResponseEntity.ok(pessoa.get()) : ResponseEntity.notFound().build();
 	}
 	
-	
 	@DeleteMapping("/{codigo}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority('ROLE_REMOVER_PESSOA') and hasAuthority('SCOPE_write')")
@@ -74,7 +64,6 @@ public class PessoaResource {
 		pessoaRepository.deleteById(codigo);
 	}
 
-	
 	@PutMapping("/{codigo}")
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> atualizar(@PathVariable Long codigo,@Valid @RequestBody Pessoa pessoa) {
@@ -89,9 +78,3 @@ public class PessoaResource {
 		pessoaService.atualizarPropriedadeAtivo(codigo, ativo);
 	}
 }
-
-
-
-
-
-

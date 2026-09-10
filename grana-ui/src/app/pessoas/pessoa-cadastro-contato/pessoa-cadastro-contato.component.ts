@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { MessageService } from 'primeng/api';
@@ -10,7 +10,7 @@ import { Contato } from 'src/app/core/contato.model';
   templateUrl: './pessoa-cadastro-contato.component.html',
   styleUrls: ['./pessoa-cadastro-contato.component.css']
 })
-export class PessoaCadastroContatoComponent implements OnInit {
+export class PessoaCadastroContatoComponent {
 
   @Input() 
   contatos:Array<Contato> = [];
@@ -58,9 +58,4 @@ export class PessoaCadastroContatoComponent implements OnInit {
     return this.contato && this.contato?.codigo;
     }
   
-    
-
-  ngOnInit(): void {
-  }
-
 }

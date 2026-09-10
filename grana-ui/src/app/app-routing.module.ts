@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
-  // { path: '**', redirectTo: 'pagina-nao-encontrada' }
+  { path: '**', redirectTo: 'pagina-nao-encontrada' }
 ];
   
 

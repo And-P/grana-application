@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 
 import me.umbrella.grana.api.config.property.GranaApiProperty;
 
+
 @Profile("oauth-security")
 @Configuration
 @EnableWebSecurity

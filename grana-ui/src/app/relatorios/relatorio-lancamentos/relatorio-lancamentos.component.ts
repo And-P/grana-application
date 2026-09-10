@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { RelatoriosService } from '../relatorios.service';
+
 
 @Component({
   selector: 'app-relatorio-lancamentos',

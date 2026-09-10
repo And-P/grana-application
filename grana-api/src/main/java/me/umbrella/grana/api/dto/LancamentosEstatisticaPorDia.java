@@ -1,9 +1,10 @@
 package me.umbrella.grana.api.dto;
 
-import me.umbrella.grana.api.model.TipoLancamento;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import me.umbrella.grana.api.model.TipoLancamento;
+
 
 public class LancamentosEstatisticaPorDia {
 

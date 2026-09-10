@@ -1,17 +1,15 @@
 package me.umbrella.grana.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 import java.util.Objects;
-
 import javax.persistence.*;
-
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name= "pessoa")
@@ -31,14 +29,12 @@ public class Pessoa {
 	@NotNull
 	private boolean ativo;
 
-
 	@JsonIgnoreProperties("pessoa")
 	@Valid
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Contato> contatos;
 
 
-	//METHODS
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -102,5 +98,4 @@ public class Pessoa {
 		Pessoa other = (Pessoa) obj;
 		return ativo == other.ativo;
 	}
-
 }

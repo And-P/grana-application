@@ -40,7 +40,7 @@ import me.umbrella.grana.api.storage.S3;
 @RequestMapping("/lancamentos")
 public class LancamentoResource {
 
-	private static final String DIR_ANEXO = "/home/and/Documentos/Cursos/AlgaWorks/Fullstack/grana-api/docs/anexos/";
+	private static final String DIR_ANEXO = "../grana-api/docs/anexos/";
 
 	@Autowired
 	private LancamentoRepository lancamentoRepository;

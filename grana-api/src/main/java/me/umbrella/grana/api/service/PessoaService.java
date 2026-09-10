@@ -36,9 +36,7 @@ public class PessoaService {
 		pessoaSalva.setAtivo(ativo);
 		pessoaRepository.save(pessoaSalva);
 	}
-	
-	
-	
+
 	public Pessoa buscarPessoaPeloCodigo(Long codigo) {
 		Pessoa pessoaSalva = pessoaRepository.findById(codigo).orElseThrow();
 		
@@ -48,5 +46,4 @@ public class PessoaService {
 		
 		return pessoaSalva;
 	}
-	
 }

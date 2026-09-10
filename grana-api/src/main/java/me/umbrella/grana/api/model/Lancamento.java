@@ -1,15 +1,16 @@
 package me.umbrella.grana.api.model;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import me.umbrella.grana.api.repository.listener.AnexoEmLancamentoListener;
+
 
 @EntityListeners(AnexoEmLancamentoListener.class)
 @Entity

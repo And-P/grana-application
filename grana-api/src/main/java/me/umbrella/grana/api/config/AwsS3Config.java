@@ -1,9 +1,13 @@
 package me.umbrella.grana.api.config;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.amazonaws.regions.Regions;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.BucketLifecycleConfiguration;
@@ -11,10 +15,9 @@ import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleFilter;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleTagPredicate;
+
 import me.umbrella.grana.api.config.property.GranaApiProperty;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+
 
 @Configuration
 public class AwsS3Config {
@@ -32,7 +35,7 @@ public class AwsS3Config {
                                                  .withRegion(Regions.US_EAST_1)
                                                  .build();
 
-        // Cria o Bucket S3 via código. (sem esse codigo teriamos que já ter o Bucket criado na S3)
+        // Cria o Bucket S3 via código. Sem esse codigo teriamos que já ter o Bucket criado na S3.
         if (!amazonS3.doesBucketExistV2(property.getAwsS3().getBucket())) {
             amazonS3.createBucket(new CreateBucketRequest(property.getAwsS3().getBucket()));
 

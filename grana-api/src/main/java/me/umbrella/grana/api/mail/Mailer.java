@@ -1,24 +1,24 @@
 package me.umbrella.grana.api.mail;
 
-import me.umbrella.grana.api.model.Lancamento;
-import me.umbrella.grana.api.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.context.event.ApplicationReadyEvent;
-//import org.springframework.context.event.EventListener;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-//import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import me.umbrella.grana.api.model.Lancamento;
+import me.umbrella.grana.api.model.Usuario;
+
 
 @Component
 public class Mailer {
@@ -57,11 +57,13 @@ public class Mailer {
 
                             variaveis.put("lancamentos", lancamentosVencidos);
 
-        List<String> emails = destinatarios.stream().map(Usuario::getEmail).collect(Collectors.toList());
+        List<String> emails = destinatarios.stream()
+                                           .map(Usuario::getEmail)
+                                           .collect(Collectors.toList());
 
 
         this.enviarEmail(
-                "andrepaiva@hotmail.com",
+                "remetente@email.com",
                 emails,
                 "Aviso de Lançamentos Vencidos",
                 TEMPLATE,

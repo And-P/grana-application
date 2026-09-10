@@ -1,16 +1,20 @@
+<h1 align="center">Grana Application</h1>
+
 <div align="center">
   <img src="hundred_dollar_bill.png" alt="100 Dollars" width="400">
 </div>
 
-<h1 align="center">Grana Application</h1>
-
 <br/>
+<br/>
+<hr />
 
+#### UML Class Diagram
 <div align="center">
   <img src="grana-api-uml.jpg" alt="class-diagram-uml" width=auto>
 </div>
 
 <br/>
+<hr />
 
 #### Description
 **Grana** is a fullstack solution for personal financial management, designed to provide predictability, organization, and assertive decision-making for everyday finances. 
@@ -25,6 +29,14 @@ The domain is **Personal Financial Management (Financial Control)**:
 - **Persons (Payees and Payers)**: Entities linked to financial postings that represent the origin or destination of financial resources.
 - **Analytical Insights and Reporting**: Consolidation of transaction data for statistical summaries, cash flow tracking, and analytical reports supporting sound financial decision-making.
 
+<hr />
+
+#### Overview
+<div align="center">
+  <img src="grana-application-overview.png" alt="paths overview" width=80%>
+</div>
+
+<br /> 
 
 <p>http://grana-application.umbrella.com
   <select>
@@ -39,9 +51,8 @@ The domain is **Personal Financial Management (Financial Control)**:
   </select>
 </p>
 
-<div align="center">
-  <img src="grana-application-overview.png" alt="paths overview" width=auto>
-</div>
+<br /> 
+<hr />
 
 #### Technologies
 

@@ -1,7 +1,9 @@
 package me.umbrella.grana.api.repository.filter;
 
-import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+
 
 public class LancamentoFilter {
 
@@ -16,7 +18,6 @@ public class LancamentoFilter {
 	private LocalDate dataVencimentoAte;
 	
 	
-	//METHODS
 	public String getDescricao() {
 		return descricao;
 	}

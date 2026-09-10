@@ -71,12 +71,7 @@ lineChartData: any;
     }
   }
 
-
-  ngOnInit(): void {
-    this.configurarGraficoPizza();
-    this.configurarGraficoLinha();
-  }
-
+  
   configurarGraficoPizza() {
     this.dashboardService.lancamentosPorCategoria()
       .then(dados => {
@@ -157,6 +152,11 @@ lineChartData: any;
     }
 
     return dias;
+  }
+
+  ngOnInit(): void {
+    this.configurarGraficoPizza();
+    this.configurarGraficoLinha();
   }
 
 }

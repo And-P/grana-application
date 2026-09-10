@@ -1,8 +1,5 @@
 package me.umbrella.grana.api.repository.lancamento;
 
-import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
-import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
-import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,12 +23,17 @@ import me.umbrella.grana.api.model.Pessoa_;
 import me.umbrella.grana.api.model.Lancamento;
 import me.umbrella.grana.api.repository.filter.LancamentoFilter;
 import me.umbrella.grana.api.repository.projection.LancamentoProjection;
+import me.umbrella.grana.api.dto.LancamentoEstatisticaPorPessoa;
+import me.umbrella.grana.api.dto.LancamentosEstatisticaPorCategoria;
+import me.umbrella.grana.api.dto.LancamentosEstatisticaPorDia;
 
 
 public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
 	@PersistenceContext
 	private EntityManager manager;
+
+
 	@Override
 	public List<LancamentoEstatisticaPorPessoa> porPessoa(LocalDate inicio, LocalDate fim) {
 		CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();

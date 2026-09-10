@@ -1,10 +1,11 @@
 package me.umbrella.grana.api.model;
 
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
+
 
 @Entity
 @Table(name= "contato")
@@ -21,7 +22,6 @@ public class Contato {
     @NotNull
     private String email;
 
-//    @NotEmpty
     private String telefone;
 
     @ManyToOne
@@ -68,7 +68,6 @@ public class Contato {
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
     }
-
 
     @Override
     public boolean equals(Object o) {

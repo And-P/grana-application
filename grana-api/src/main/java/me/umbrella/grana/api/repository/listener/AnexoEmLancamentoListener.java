@@ -1,8 +1,8 @@
 package me.umbrella.grana.api.repository.listener;
 
-import javax.persistence.PostLoad;
-
 import org.springframework.util.StringUtils;
+
+import javax.persistence.PostLoad;
 
 import me.umbrella.grana.api.GranaApiApplication;
 import me.umbrella.grana.api.storage.S3;

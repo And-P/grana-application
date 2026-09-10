@@ -6,6 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "cidade")
 public class Cidade {
@@ -36,13 +37,9 @@ public class Cidade {
         this.nome = nome;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
+    public Estado getEstado() { return estado; }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
+    public void setEstado(Estado estado) { this.estado = estado; }
 
     @Override
     public int hashCode() {

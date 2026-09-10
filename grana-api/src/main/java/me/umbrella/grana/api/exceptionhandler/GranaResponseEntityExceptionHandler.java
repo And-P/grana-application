@@ -1,11 +1,5 @@
 package me.umbrella.grana.api.exceptionhandler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -23,15 +17,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 public class GranaResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 	
-	// busca string do arquivo resources/messages.properties
+	//Busca string no messages.properties
 	@Autowired
 	private MessageSource messageSource;
 
 
-	//METHODS
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -83,9 +83,7 @@ public class GranaResponseEntityExceptionHandler extends ResponseEntityException
 
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
-	
-		
-	
+
 	private List<Erro> criarListaDeErros(BindingResult bindingResult) {
 		
 		List<Erro> erros = new ArrayList<>();

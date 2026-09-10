@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "app-nao-autorizado",
@@ -8,9 +8,7 @@ import { Component, OnInit } from "@angular/core";
             <p>Você não tem permissão para acessar esta página.</p>
         </div>`
 })
-export class NaoAutorizadoComponent implements OnInit {
+export class NaoAutorizadoComponent {
  
     constructor() { }
-
-    ngOnInit(): void { }
 }

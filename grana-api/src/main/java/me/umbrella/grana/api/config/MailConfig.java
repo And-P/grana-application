@@ -1,6 +1,5 @@
 package me.umbrella.grana.api.config;
 
-import me.umbrella.grana.api.config.property.GranaApiProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +7,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
+
+import me.umbrella.grana.api.config.property.GranaApiProperty;
+
 
 @Configuration
 public class MailConfig {
