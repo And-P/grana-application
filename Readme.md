@@ -1,10 +1,12 @@
+
 <h1 align="center">Grana Application</h1>
+
+<br/>
 
 <div align="center">
   <img src="hundred_dollar_bill.png" alt="100 Dollars" width="400">
 </div>
 
-<br/>
 <br/>
 
 #### UML Class Diagram
